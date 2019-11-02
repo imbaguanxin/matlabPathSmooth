@@ -20,15 +20,6 @@ classdef map2d
             end
         end
         
-        % set cell status
-        function self=setStatus(self,row,col,status)
-            if(self.validPos(row,col))
-                self.cellStatus(row,col) = status;
-            else 
-                fprintf("not a valid grid, set status failed.");
-            end
-        end
-       
         function result=validPos(self,row,col)
             result = row > 0 && row < self.rowLength + 1 && col > 0 && col < self.colLength + 1;
         end
@@ -49,14 +40,6 @@ classdef map2d
             end
         end
         
-        function self=setParent(self,row,col,prow,pcol)
-           if (self.validPos(row,col) && self.validPos(prow,pcol))
-               self.parent{row,col} = [prow,pcol];
-           else
-                fprintf("not a valid grid, set parent failed.");
-            end
-        end
-        
         function result=isInsideBlock(self,row,col)
             dirction = {[1,1],[1,-1],[-1,1],[-1,-1]};
             pt = [row,col];
@@ -69,5 +52,39 @@ classdef map2d
             end
             result =  acc > 3;
         end
-    end     
+        
+        function result=changeCorrdinate(self)
+            result = map2d(self.rowLength, self.colLength);
+            for i = 1:self.rowLength
+                for j = 1:self.colLength
+                    result.cellStatus(j,self.rowLength + 1 - i) = self.cellStatus(i,j);
+                end
+            end
+        end
+        
+        function result = showMapMatrixImg(self)
+            result = zeros(self.rowLength, self.colLength, 3);
+            for i = 1 : self.rowLength
+                for j = 1 : self.colLength
+                    temp = self.cellStatus(i,j);
+                    if (temp == 0)
+                        result(i,j,:) = [255,255,255];
+                    elseif (temp == 1)
+                        result(i,j,:) = [0,0,0];
+                    elseif (temp == 2)
+                        result(i,j,:) = [0,255,0];
+                    elseif (temp == 3)
+                        result(i,j,:) = [255,0,0];
+                    elseif (temp == 4)
+                        result(i,j,:) = [0,0,255];
+                    elseif (temp == 5)
+                        result(i,j,:) = [102/255,204/255,255/255];
+                    end
+                end
+            end
+        end
+        
+
+        
+    end
 end
