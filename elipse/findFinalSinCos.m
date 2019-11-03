@@ -1,8 +1,6 @@
-function [sin,cos] = findFinalSinCos(point1,point2)%(p1,p2,xbound)
+function [sin,cos] = findFinalSinCos(point1,point2)
 %FINDSINCOS Summary of this function goes here
 %  Detailed explanation goes here
-% point1 = [p1(2), xbound - p1(1)];
-% point2 = [p2(2), xbound - p2(1)];
 pbigger = point1;
 psmaller = point2;
 if (point1(1) < point2(1))
