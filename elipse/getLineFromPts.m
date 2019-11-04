@@ -8,16 +8,16 @@ y1 = point2(2);
 dx = x0 - x1;
 dy = y0 - y1;
 if (dx == 0)
-    a = -1 / center(1);
+    a = 1;
     b = 0;
-    c = 1;
+    c = -center(1);
 elseif (dy == 0)
     a = 0;
-    b = -1 / center(2);
-    c = 1;
+    b = 1;
+    c = -center(2);
 else
     k = dy / dx;
-    disp(k);
+%     disp(k);
     a = k;
     b = -1;
     c = center(2) - k * center(1);

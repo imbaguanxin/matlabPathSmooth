@@ -53,8 +53,7 @@ for i = xl : xh
         % isInRange assures that the distance from (i,j) to center less
         % than a.
         if (mapXY.cellStatus(i,j) == 1 && ~mapXY.isInsideBlock(i,j) && isInRange(startXY,destXY,[i,j]))
-            tempBsq = findBSquare(i-cx, j-cy ,a, sin, cos);
-%             disp(tempBsq);
+            tempBsq = findBSquare(i-cx, j-cy ,a, cos, sin);
             % find the smallest b square
             if (tempBsq < minbsquare)
                 minbsquare = tempBsq;
@@ -82,17 +81,71 @@ imshow(imgResult);
 
 
 % find the first tangentLine
-[tangentLine1a, tangentLine1b, tangentLine1c] = tangentLine(a^2,minbsquare,cos,sin,[minx,miny],[cx,cy]);
+[tl1a, tl1b, tl1c] = tangentLine(a^2,minbsquare,cos,sin,[minx,miny],[cx,cy]);
 
-tlFunc = sprintf('%d * x + %d * y + ( %d)', tangentLine1a,tangentLine1b,tangentLine1c);
-elipseFunc = sprintf('((x - %d) * %d - (y - %d) * %d)^2 / %d^2 + ((x - %d) * %d + (y - %d) * %d)^2 / %d^2 - 1', cx,cos,cy,sin,a,cx,sin,cy,cos,sqrt(minbsquare));
-comb = sprintf('%s * %s', tlFunc, elipseFunc);
-% line = sprintf('%d * x + %d * y + %d = 0', a,b,c);
-% line2 = sprintf('%d * x + %d * y + %d = 0', aa,bb,cc);
-% lines = sprintf('(%d * x + %d * y + %d) * (%d * x + %d * y + %d)', aa,bb,cc,a,b,c);
-% 
-% ezplot(elipseFunc, [0,800]);
-ezplot(tlFunc, [0,800]);
+% find search range related to dynamic constrains
+velocity = 10;
+acceleration = 2;
+% radius = velocity^2 / (2 * acceleration^2);
+radius = 200;
+constrain = findSearchConstrain(startXY, destXY, radius);
+constrain = [constrain ; tl1a, tl1b, tl1c];
+
+
+[sxl,sxh,syl,syh] = findSearchRangeDynamic(startXY,destXY,radius,mapXY.xLength,mapXY.yLength);
+barriers = {} ;
+for i = sxl : sxh
+    for j = syl : syh
+        if (mapXY.cellStatus(i,j) == 1 && ~mapXY.isInsideBlock(i,j) && ~isSameSide(constrain, [i,j], [cx,cy]))
+            barriers{length(barriers) + 1} = [i,j];
+        end
+    end
+end
+
+abratio = a / sqrt(minbsquare);
+ while(~isempty(barriers))
+    minPlace = 1;
+    bsquare = findBSquareFixedABRatio(barriers{1}(1),barriers{1}(2),abratio,cos,sin);
+    for i = 1 : length(barriers)
+        tempPoint = barriers{i};
+        tempBsq = findBSquareFixedABRatio(tempPoint(1),tempPoint(2),abratio,cos,sin);
+        if (tempBsq < bsquare)
+            bsquare = tempBsq;
+            minx = tempPoint(1);
+            miny = tempPoint(2);
+%             minPlace = i;
+%             disp("find b smaller than 1st point's b");
+        end
+    end
+    
+    [tla, tlb, tlc] = tangentLine(abratio^2 * bsquare,bsquare,cos,sin,[minx,miny],[cx,cy]);
+    
+    constrain = [constrain ; tla, tlb, tlc];
+    
+%     disp(minPlace);
+    barriers(minPlace) = [];
+    
+    % delete points
+    j = 0;
+%     fprintf("before delete: ")
+%     disp(length(barriers));
+    for i = 1 : length(barriers)
+        if (~isSameSide(constrain, [cx,cy], [i,j]))           
+            barriers(i - j) = [];
+            j = j + 1;
+        end
+    end
+%     fprintf("after delete: ")
+%     disp(length(barriers));
+ end
+
+
+% tlFunc = sprintf('%d * x + %d * y + ( %d)', tl1a, tl1b, tl1c);
+
+% elipse = elipseFunc(cx,cy,a,sqrt(minbsquare),cos,sin);
+
+% ezplot(elipse, [0,800]);
+% ezplot(tlFunc, [0,800]);
 
 
 

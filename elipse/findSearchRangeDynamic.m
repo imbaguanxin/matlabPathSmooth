@@ -4,9 +4,9 @@ function [xl,xh,yl,yh] = findSearchRangeDynamic(start,dest,radius,xbound,ybound)
 %   max speed of a UAV and a is the max acceleration of a UAV. Within this
 %   capsule like area, we need to detect barriers. Here to find a
 %   rectangle area that includes the capsule for quick iteration.
-xl = max(1, min(start(1),dest(1)) - radius);
-xh = min(xbound, (max(start(1),dest(1)) + radius));
-yl = max(1, min(start(2),dest(2)) - radius);
-yh = min(ybound, (max(start(2),dest(2)) + radius));
+xl = floor(max(1, min(start(1),dest(1)) - radius));
+xh = ceil(min(xbound, (max(start(1),dest(1)) + radius)));
+yl = floor(max(1, min(start(2),dest(2)) - radius));
+yh = ceil(min(ybound, (max(start(2),dest(2)) + radius)));
 end
 
