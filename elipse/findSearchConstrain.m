@@ -1,6 +1,5 @@
 function result = findSearchConstrain(pt1,pt2,radius)
-%FINDSEARCHCONSTRAIN 此处显示有关此函数的摘要
-%   此处显示详细说明
+%FINDSEARCHCONSTRAIN find the search range with dynamic constrains
 dir = pt1 - pt2;
 turning = [0, -1; 1, 0];
 dir90 = transpose(turning * transpose(dir) / distance(pt1, pt2) * radius);

@@ -1,8 +1,8 @@
 % ezplot(func, [-5,5])
 
 % build map from img
-% img = imread('D:/repo/matlabPathSmooth/data/garageMap.jpg');
-img = imread('/Users/guanxin/Desktop/cloned/matlabPathSmooth/data/garageMap.jpg');
+img = imread('D:/repo/matlabPathSmooth/data/garageMap.jpg');
+% img = imread('/Users/guanxin/Desktop/cloned/matlabPathSmooth/data/garageMap.jpg');
 % change img from color to gray
 img = rgb2gray(img);
 [sizeRow, sizeCol] = size(img);
@@ -42,8 +42,9 @@ cy = (startXY(2) + destXY(2))/2;
 minbsquare = a^2;
 minx = 0;
 miny = 0;
-% find how the elipse is turned from a standard elipse
-% sin <- sin(-theta), cos <- cos(-theta)
+% find how the elipse is turned from a standard elipse, the turning angle
+% is theta.
+% sin means sin(-theta), cos means cos(-theta)
 [sin,cos] = findFinalSinCos(startXY, destXY);
 
 % search in the range
@@ -113,8 +114,6 @@ abratio = a / sqrt(minbsquare);
             bsquare = tempBsq;
             minx = tempPoint(1);
             miny = tempPoint(2);
-%             minPlace = i;
-%             disp("find b smaller than 1st point's b");
         end
     end
     
@@ -122,21 +121,16 @@ abratio = a / sqrt(minbsquare);
     
     constrain = [constrain ; tla, tlb, tlc];
     
-%     disp(minPlace);
     barriers(minPlace) = [];
     
     % delete points
     j = 0;
-%     fprintf("before delete: ")
-%     disp(length(barriers));
     for i = 1 : length(barriers)
         if (~isSameSide(constrain, [cx,cy], [i,j]))           
             barriers(i - j) = [];
             j = j + 1;
         end
     end
-%     fprintf("after delete: ")
-%     disp(length(barriers));
  end
 
 
@@ -147,7 +141,7 @@ abratio = a / sqrt(minbsquare);
 % ezplot(elipse, [0,800]);
 % ezplot(tlFunc, [0,800]);
 
-
+disp(constrain);
 
 
 

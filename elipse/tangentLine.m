@@ -1,6 +1,5 @@
 function [a,b,c] = tangentLine(aSquare,bSquare,cos,sin,givenPoint,center)
-%TANGENTLINE 此处显示有关此函数的摘要
-%   此处显示详细说明;
+%TANGENTLINE find tangent line of a elipse given a point on the elipse
 % fprintf('aSquare: ');
 % disp(aSquare);
 turning = [cos,-sin;sin,cos];

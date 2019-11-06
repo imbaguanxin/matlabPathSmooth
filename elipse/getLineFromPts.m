@@ -1,6 +1,6 @@
 function [a,b,c] = getLineFromPts(point1,point2,center)
-%GETLINEFROMPTS 此处显示有关此函数的摘要
-%   此处显示详细说明
+%GETLINEFROMPTS find a line, point1 and point2 shows the slop; center shows
+%which point it goes through
 x0 = point1(1);
 y0 = point1(2);
 x1 = point2(1);

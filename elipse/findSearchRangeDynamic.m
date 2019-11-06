@@ -1,5 +1,5 @@
 function [xl,xh,yl,yh] = findSearchRangeDynamic(start,dest,radius,xbound,ybound)
-%FINDSEARCHRANGEDYNAMIC 此处显示有关此函数的摘要
+%FINDSEARCHRANGEDYNAMIC find search box given dynamic constrains
 %   according to dynamic constrain : radis < v^2/(2*a^2), where v is the
 %   max speed of a UAV and a is the max acceleration of a UAV. Within this
 %   capsule like area, we need to detect barriers. Here to find a

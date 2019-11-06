@@ -1,4 +1,6 @@
 function [xlow,xhigh,ylow,yhigh] = findSearchRange(p1,p2,xbound,ybound)
+% FINDSEARCHRANGE during the elipse finding, find a box that fits in the
+% elipse.
 dis = distance(p1,p2)/2;
 cx = (p1(1) + p2(1))/2;
 cy = (p1(2) + p2(2))/2;
