@@ -84,6 +84,10 @@ classdef map2d
             end
         end
         
+        function result = pointToXYCor(self,point)
+            result = [point(2), self.rowLength + 1 - point(1)];
+        end
+        
 
         
     end
