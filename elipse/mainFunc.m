@@ -38,16 +38,7 @@ for i = xl : xh
     end
 end
 
-% draw the elipse
-% for i = xl : xh
-%     for j = yl : yh
-%         if (mapXY.cellStatus(i,j) == 0)
-%             if (withInElipse([i,j],[cx,cy],a,sqrt(minbsquare),cos,sin))
-%                 mapXY.cellStatus(i,j) = mod(color,10) + 3;
-%             end
-%         end
-%     end
-% end
+% draw the elipse center and collision point
 mapXY.cellStatus(minx,miny) = 3;
 mapXY.cellStatus(ceil(cx),ceil(cy)) = 3;
 
@@ -72,12 +63,12 @@ for i = sxl : sxh
         end
     end
 end
-% fprintf('length of barriers');
-% disp(length(barriers));
-
+% balloon
 abratio = a / sqrt(minbsquare);
 while(~isempty(barriers))
     minPlace = 1;
+    minx = barriers{1}(1);
+    miny = barriers{1}(2);
     bsquare = findBSquareFixedABRatio(barriers{1}(1),barriers{1}(2),abratio,cos,sin,cx,cy);
     for i = 1 : length(barriers)
         tempPoint = barriers{i};
@@ -90,14 +81,15 @@ while(~isempty(barriers))
         end
     end
     mapXY.cellStatus(minx,miny) = 4;
+    barriers(minPlace) = [];
     elipse{length(elipse) + 1} = [sqrt(abratio^2 * bsquare), sqrt(bsquare), cos,sin,cx,cy];
     [tla, tlb, tlc] = tangentLine(abratio^2 * bsquare,bsquare,cos,sin,[minx,miny],[cx,cy]);
     
     constrain = [constrain ; tla, tlb, tlc];
     
-    barriers(minPlace) = [];
-    
     % delete points
+    fprintf('length of barriers before delete');
+    disp(length(barriers));
     j = 0;
     for i = 1 : length(barriers)
         if (~isSameSide(constrain, [cx,cy], barriers{i-j}))
@@ -105,8 +97,10 @@ while(~isempty(barriers))
             j = j + 1;
         end
     end
-    %     fprintf('length of barriers');
-    %     disp(length(barriers));
+    fprintf('num deleted');
+    disp(j);   
+    fprintf('length of barriers after delete');
+    disp(length(barriers));
     
 end
 
@@ -122,10 +116,6 @@ for i = sxl : sxh
         end
     end
 end
-
-% img = mapXY.showMapImg();
-% img = flip(img,1);
-% imshow( img ) ;
 
 end
 
