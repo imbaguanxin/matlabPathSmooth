@@ -90,6 +90,12 @@ classdef mapXYcor
                     elseif (temp == 12)
                         % #AB82FF MediumPurple
                         color = [171/255,130/255,255/255];
+                    elseif (temp == 13)
+                        % #DCDCDC Gainsboro
+                        color = [220/255,220/255,220/255];
+                    elseif (temp == 14)
+                        % #9C9C9C grey
+                        color = [156/255,156/255,156/255];
                     end
                     result(self.yLength + 1 - j,i,:) = color;
                 end

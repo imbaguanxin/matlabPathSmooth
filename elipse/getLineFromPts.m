@@ -17,7 +17,6 @@ elseif (dy == 0)
     c = -center(2);
 else
     k = dy / dx;
-%     disp(k);
     a = k;
     b = -1;
     c = center(2) - k * center(1);
