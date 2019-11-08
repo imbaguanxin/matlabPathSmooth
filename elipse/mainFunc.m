@@ -88,8 +88,8 @@ while(~isempty(barriers))
     constrain = [constrain ; tla, tlb, tlc];
     
     % delete points
-    fprintf('length of barriers before delete');
-    disp(length(barriers));
+%     fprintf('length of barriers before delete');
+%     disp(length(barriers));
     j = 0;
     for i = 1 : length(barriers)
         if (~isSameSide(constrain, [cx,cy], barriers{i-j}))
@@ -97,10 +97,10 @@ while(~isempty(barriers))
             j = j + 1;
         end
     end
-    fprintf('num deleted');
-    disp(j);   
-    fprintf('length of barriers after delete');
-    disp(length(barriers));
+%     fprintf('num deleted');
+%     disp(j);   
+%     fprintf('length of barriers after delete');
+%     disp(length(barriers));
     
 end
 

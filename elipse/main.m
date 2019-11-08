@@ -26,8 +26,8 @@ mapXY = map2d2mapXYcor(map);
 mapElipse = mapXY;
 mapConstrain = mapXY;
 
-constrain = cell(length(path) - 1);
-allElipse = cell(length(path) - 1);
+constrain = cell(length(path) - 1,1);
+allElipse = cell(length(path) - 1,1);
 % find search range related to dynamic constrains
 velocity = 10;
 acceleration = 2;
