@@ -1,4 +1,4 @@
-function result = drawElipse(a,b,cosine,sine,cx,cy)
+function result = drawEllipse(a,b,cosine,sine,cx,cy)
 rot = [cosine, sine;-sine,cosine];
 phi = 0 : 0.01 : 2*pi;
 x = a .* cos(phi);

@@ -1,5 +1,5 @@
 function [a,b,c] = tangentLine(aSquare,bSquare,cos,sin,givenPoint,center)
-%TANGENTLINE find tangent line of a elipse given a point on the elipse
+%TANGENTLINE find tangent line of a ellipse given a point on the ellipse
 % fprintf('aSquare: ');
 % disp(aSquare);
 turning = [cos,-sin;sin,cos];

@@ -1,21 +1,21 @@
-function [constrain,mapXY,elipse] = mainFunc(mapXY, startXY, destXY, color, radius)
-%OUTPUTELIPSE Summary of this function goes here
+function [constrain,mapXY,ellipse] = mainFunc(mapXY, startXY, destXY, color, radius)
+%OUTPUTELLIPSE Summary of this function goes here
 %   Detailed explanation goes here
 
 % find a square search range
 [xl,xh,yl,yh] = findSearchRange(startXY,destXY,mapXY.xLength, mapXY.yLength);
-elipse = {};
-% find the a of the elipse
+ellipse = {};
+% find the a of the ellipse
 a = distance(startXY,destXY)/2;
 aSquare = a^2;
-% find the center of the elipse
+% find the center of the ellipse
 cx = (startXY(1) + destXY(1))/2;
 cy = (startXY(2) + destXY(2))/2;
 % the minimum b square is smaller than a square
 minbsquare = aSquare;
 minx = 0;
 miny = 0;
-% find how the elipse is turned from a standard elipse, the turning angle
+% find how the ellipse is turned from a standard ellipse, the turning angle
 % is theta.
 % sin means sin(-theta), cos means cos(-theta)
 [sin,cos] = findFinalSinCos(startXY, destXY);
@@ -38,11 +38,11 @@ for i = xl : xh
     end
 end
 
-% draw the elipse center and collision point
+% draw the ellipse center and collision point
 mapXY.cellStatus(minx,miny) = 3;
 mapXY.cellStatus(ceil(cx),ceil(cy)) = 3;
 
-elipse{length(elipse) + 1} = [a, sqrt(minbsquare), cos, sin, cx, cy];
+ellipse{length(ellipse) + 1} = [a, sqrt(minbsquare), cos, sin, cx, cy];
 
 % find the first tangentLine
 [tl1a, tl1b, tl1c] = tangentLine(a^2,minbsquare,cos,sin,[minx,miny],[cx,cy]);
@@ -82,7 +82,7 @@ while(~isempty(barriers))
     end
     mapXY.cellStatus(minx,miny) = 4;
     barriers(minPlace) = [];
-    elipse{length(elipse) + 1} = [sqrt(abratio^2 * bsquare), sqrt(bsquare), cos,sin,cx,cy];
+    ellipse{length(ellipse) + 1} = [sqrt(abratio^2 * bsquare), sqrt(bsquare), cos,sin,cx,cy];
     [tla, tlb, tlc] = tangentLine(abratio^2 * bsquare,bsquare,cos,sin,[minx,miny],[cx,cy]);
     
     constrain = [constrain ; tla, tlb, tlc];
