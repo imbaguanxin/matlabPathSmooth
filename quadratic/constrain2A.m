@@ -14,8 +14,6 @@ for i = 1 : numOfParams
 end
 constrain = [c1,c2];
 tr = [t1,t1];
-% disp(c1);
-% disp(c2);
 content = constrain .* tr;
 [row,col] = size(content);
 result = zeros(0);
