@@ -22,6 +22,7 @@ hardCodeConstraints(4,5 * 2 * (len - 1) + 10) = 1;
 
 flexConstraints = [];
 for i = 1 : length(inputT) - 1
+%     disp(i);
     t = inputT(i);
     tempFourOrderConstraints = [];
     for j = 1:length(inputT)
@@ -41,21 +42,9 @@ for i = 1 : length(inputT) - 1
             tempFourOrderConstraints = [tempFourOrderConstraints,zeros(10,10)];
         end
     end
-%     [row, col] = size(flexConstraints);
-% disp(row);
-% disp(col);
-%     [row, col] = size(tempFourOrderConstraints);
-% disp(row);
-% disp(col);
     flexConstraints = [flexConstraints; tempFourOrderConstraints];
 end
-% [row, col] = size(hardCodeConstraints);
-% disp(row);
-% disp(col);
-% [row, col] = size(flexConstraints);
-% disp(row);
-% disp(col);
-% result = [];
+% disp(flexConstraints);
 result = [hardCodeConstraints ; flexConstraints];
 end
 
