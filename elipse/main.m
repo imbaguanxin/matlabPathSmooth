@@ -18,7 +18,7 @@ map = map2d(sizeRow,sizeCol);
 map.cellStatus = mapStatus;
 
 % build path
-path = {[11,19],[90,156],[90,426],[105,563],[475,569],[741,575]};
+path = {[11,19],[90,120],[400,120],[750,120],[750,350]};
 
 % set radius
 radius = 50;
