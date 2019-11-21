@@ -2,6 +2,8 @@ function constrain = ellipseGenerateWrap(map,path,drawSize,radius,mode)
 %ELLIPSEGENERATEWRAP inputs a original map, path, the size of the
 %final picture, the radius of dynamic constrain and how you want to
 %visualize the map.
+% mark the paths
+
 mapXY = map2d2mapXYcor(map);
 mapEllipse = mapXY;
 
@@ -17,6 +19,8 @@ for index = 1 : length(path) - 1
     allEllipse{index} = ellipseStack;
     constrain{index} = lines;
 end
+
+
 
 % show img with safe area
 img = mapEllipse.showMapImg();
@@ -68,9 +72,16 @@ switch mode
     otherwise
 end
 
+% mark the paths
+for i = 1 : length(path)
+    pt = map.pointToXYCor(path{i});
+    plot(pt(1),pt(2),'o');
+    hold on;
+end
+
 xlim([0 drawSize])
 ylim([0,drawSize])
 set(gca,'ydir','normal');
-
+hold on
 end
 

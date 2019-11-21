@@ -5,7 +5,7 @@ if(length(inputPath) < 3)
     fprintf("length of the input Path should > 2, your input:");
     disp(length(inputPath));
 end
-totalLength = (length(inputPath) - 2) * 10 + 4;
+totalLength = (length(inputPath) - 2) * 8 + 4;
 result = zeros(totalLength,1);
 firstPoint = inputPath{1};
 result(1) = firstPoint(1);
