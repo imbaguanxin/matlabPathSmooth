@@ -1,8 +1,8 @@
-function [result,A,B] = mainConstraint(constraints,path,map,amax,vmax)
+function [result,A,B,time] = mainConstraint(constraints,path,map,amax,vmax)
 %MAINCONSTRAINT Summary of this function goes here
 %   Detailed explanation goes here
 options = optimoptions('quadprog');
-options = optimoptions(options,'MaxIterations', 1e+5); 
+options = optimoptions(options,'MaxIterations', 5e+4); 
 numOfOrder = 5;
 numOfTotalSeg = length(path) - 1;
 fprintf("segment number:");
@@ -17,7 +17,7 @@ if (length(constraints) == length(path) - 1)
     % calculate time
     time = zeros(1,numOfTotalSeg);
     for i = 1:length(time)
-        time(i) = findTime(changedPath{i},changedPath{i+1},amax,vmax);
+        time(i) = 10;%findTime(changedPath{i},changedPath{i+1},amax,vmax);
     end
     % build constrain A and B
     A = [];

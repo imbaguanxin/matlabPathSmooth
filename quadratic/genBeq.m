@@ -6,7 +6,26 @@ if(length(inputPath) < 3)
     disp(length(inputPath));
 end
 totalLength = (length(inputPath) - 2) * 8 + 4;
+% totalLength = (length(inputPath) - 2) * 8 + (length(inputPath) - 1)*4;
 result = zeros(totalLength,1);
+% j = 1;
+% for i = 1 : length(inputPath)
+%     tempPoint = inputPath{i};
+%     if (i == 1)
+%         result(j) = tempPoint(1);
+%         result(j+1) = tempPoint(2);
+%         j = j+2;
+%     elseif (i == length(inputPath))
+%         result(j) = tempPoint(1);
+%         result(j+1) = tempPoint(2);
+%     else
+%         result(j) = tempPoint(1);
+%         result(j+1) = tempPoint(2);
+%         result(j+2) = tempPoint(1);
+%         result(j+3) = tempPoint(2);
+%         j = j+4;
+%     end
+% end
 firstPoint = inputPath{1};
 result(1) = firstPoint(1);
 result(2) = firstPoint(2);
@@ -14,6 +33,11 @@ lastPoint = inputPath{length(inputPath)};
 result(3) = lastPoint(1);
 result(4) = lastPoint(2);
 end
+
+
+
+
+
 % totalLength = length(inputPath) * 8 + 4;
 % result = zeros(totalLength,1);
 % firstPoint = inputPath(1);

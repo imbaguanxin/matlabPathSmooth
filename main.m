@@ -37,12 +37,12 @@ constraints = ellipseGenerateWrap(map,path,picSize,radius,visMode);
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % auto part
-% constraints = constraints(1:4);
-% path = path(1:5);
+constraints = constraints(1:4);
+path = path(1:5);
 
-vmax = 15;
-amax = 4;
-[r,A,B] = mainConstraint(constraints, path, map, amax, vmax);
+vmax = 13;
+amax = 3;
+[r,A,B,time] = mainConstraint(constraints, path, map, amax, vmax);
 disp(r);
 plotSmoothPath(time, r);
 
