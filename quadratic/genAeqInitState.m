@@ -1,11 +1,12 @@
-function result = genAeq(inputT)
+function result = genAeqInitState(inputT)
 %GENAEQ Summary of this function goes here
 %   Detailed explanation goes here
 lastT = inputT(length(inputT));
 len = length(inputT);
-hardCodeConstraints = zeros(4*length(inputT),10*len);
-hard code the start point and end point constraints
-start point constraints
+
+% hard code the start point and end point constraints
+hardCodeConstraints = zeros(8,10*len);
+% start point constraints
 hardCodeConstraints(1,5) = 1;
 hardCodeConstraints(2,10) = 1;
 % end point constraints
@@ -19,7 +20,14 @@ hardCodeConstraints(4, 5 * 2 * (len - 1) + 7) = lastT(1)^3;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 8) = lastT(1)^2;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 9) = lastT(1)^1;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 10) = 1;
-
+% start point velocity constrain
+hardCodeConstraints(5,4) = 1;
+hardCodeConstraints(6,9) = 1;
+% start point accelerationg constrain
+hardCodeConstraints(7,3) = 2;
+hardCodeConstraints(8,8) = 2;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% hardCodeConstraints = zeros(4*length(inputT),10*len);
 % for i = 1 : length(inputT)
 %     startRow = (i-1)*4;
 %     startCol = (i-1)*10;
@@ -35,9 +43,7 @@ hardCodeConstraints(4, 5 * 2 * (len - 1) + 10) = 1;
 %     hardCodeConstraints(startRow+4, startCol+8) = inputT(i)^2;
 %     hardCodeConstraints(startRow+4, startCol+9) = inputT(i)^1;
 %     hardCodeConstraints(startRow+4, startCol+10) = 1;
-end
-
-
+% end
 
 
 flexConstraints = [];

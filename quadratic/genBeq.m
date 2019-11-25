@@ -6,8 +6,10 @@ if(length(inputPath) < 3)
     disp(length(inputPath));
 end
 totalLength = (length(inputPath) - 2) * 8 + 4;
+% go through every point
 % totalLength = (length(inputPath) - 2) * 8 + (length(inputPath) - 1)*4;
 result = zeros(totalLength,1);
+% go through every point
 % j = 1;
 % for i = 1 : length(inputPath)
 %     tempPoint = inputPath{i};

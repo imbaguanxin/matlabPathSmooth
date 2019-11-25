@@ -20,8 +20,6 @@ for index = 1 : length(path) - 1
     constrain{index} = lines;
 end
 
-
-
 % show img with safe area
 img = mapEllipse.showMapImg();
 img = flip(img,1);

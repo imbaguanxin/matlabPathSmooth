@@ -3,7 +3,6 @@ function result = genAeq(inputT)
 %   Detailed explanation goes here
 lastT = inputT(length(inputT));
 len = length(inputT);
-
 % hard code the start point and end point constraints
 hardCodeConstraints = zeros(4,10*len);
 % start point constraints
@@ -20,7 +19,6 @@ hardCodeConstraints(4, 5 * 2 * (len - 1) + 7) = lastT(1)^3;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 8) = lastT(1)^2;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 9) = lastT(1)^1;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 10) = 1;
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % hardCodeConstraints = zeros(4*length(inputT),10*len);
 % for i = 1 : length(inputT)

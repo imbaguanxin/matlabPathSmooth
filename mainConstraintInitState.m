@@ -1,18 +1,17 @@
-function [result,A,B,time,finalState] = mainConstraint(constraints,changedPath,amax,vmax)
+function [result,A,B,time,finalState] = mainConstraintInitState(constraints,changedPath,amax,vmax,initState)
 %MAINCONSTRAINT Summary of this function goes here
 %   Detailed explanation goes here
 options = optimoptions('quadprog');
-options = optimoptions(options,'MaxIterations', 1e+5); 
+options = optimoptions(options,'MaxIterations', 5e+4); 
 numOfOrder = 5;
 numOfTotalSeg = length(changedPath) - 1;
 fprintf("segment number:");
 disp(numOfTotalSeg);
-
-if (length(constraints) == length(changedPath) - 1)
+if (length(constraints) == length(changedPath) - 1 && numOfTotalSeg <= 4)
     % calculate time
     time = zeros(1,numOfTotalSeg);
     for i = 1:length(time)
-        time(i) = 10; %findTime(changedPath{i},changedPath{i+1},amax,vmax);
+        time(i) = 10;%findTime(changedPath{i},changedPath{i+1},amax,vmax);
     end
     % build constrain A and B
     A = [];
@@ -39,11 +38,12 @@ if (length(constraints) == length(changedPath) - 1)
 %         disp(size(B));
     end
     
-    beq = genBeq(changedPath);
+    beq = genBeqInitState(changedPath,initState(1),initState(2),initState(3),initState(4));
     f = zeros(1, length(time) * 10);
     H = genHessenberg(time);
-    aeq = genAeq(time);
+    aeq = genAeqInitState(time);
     result = quadprog(H,f,A,B,aeq,beq,[],[],[],options);
+    
     % cal the velocity and acceleration at the last point
     t = time(length(time));
     startIndex = length(result) - 10;
@@ -58,7 +58,7 @@ else
     fprintf("size of constraints:");
     disp(length(constraints));
     fprintf("size of path:");
-    disp(length(changedPath));
+    disp(length(path));
     fprintf("total segment should be <= 4, input:");
     disp(numOfTotalSeg);
 end
