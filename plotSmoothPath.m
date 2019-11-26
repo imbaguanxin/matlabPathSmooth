@@ -1,6 +1,6 @@
 function result = plotSmoothPath(timeList,vector)
-%PLOTPATH Summary of this function goes here
-%   Detailed explanation goes here
+%PLOTPATH plot quadProg result
+%   Given time list and quadProg result, visualize the path.
 figure;
 for i = 1 : length(timeList)
     start = (i-1) * 10;

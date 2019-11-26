@@ -2,7 +2,7 @@ function [result,A,B,time,finalState] = mainConstraint(constraints,changedPath,a
 %MAINCONSTRAINT Summary of this function goes here
 %   Detailed explanation goes here
 options = optimoptions('quadprog');
-options = optimoptions(options,'MaxIterations', 1e+5); 
+options = optimoptions(options,'MaxIterations', 1e+4); 
 numOfOrder = 5;
 numOfTotalSeg = length(changedPath) - 1;
 fprintf("segment number:");
@@ -43,6 +43,7 @@ if (length(constraints) == length(changedPath) - 1)
     f = zeros(1, length(time) * 10);
     H = genHessenberg(time);
     aeq = genAeq(time);
+    fprintf("start quadprog");
     result = quadprog(H,f,A,B,aeq,beq,[],[],[],options);
     % cal the velocity and acceleration at the last point
     t = time(length(time));

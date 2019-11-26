@@ -65,6 +65,8 @@ for i = sxl : sxh
 end
 % balloon
 abratio = a / sqrt(minbsquare);
+% lastB = sqrt(minbsquare);
+% lastA = a;
 while(~isempty(barriers))
     minPlace = 1;
     minx = barriers{1}(1);
@@ -84,8 +86,18 @@ while(~isempty(barriers))
     barriers(minPlace) = [];
     ellipse{length(ellipse) + 1} = [sqrt(abratio^2 * bsquare), sqrt(bsquare), cos,sin,cx,cy];
     [tla, tlb, tlc] = tangentLine(abratio^2 * bsquare,bsquare,cos,sin,[minx,miny],[cx,cy]);
-    
     constrain = [constrain ; tla, tlb, tlc];
+    
+    % make sure b is getteing smaller
+%     tempA = sqrt(abratio^2 * bsquare);
+%     if (abs(sqrt(bsquare) - lastB) > 1 || abs(tempA - lastA) > 1)
+%         lastB = sqrt(bsquare);
+%         lastA = tempA;
+%         ellipse{length(ellipse) + 1} = [sqrt(abratio^2 * bsquare), sqrt(bsquare), cos,sin,cx,cy];
+%         [tla, tlb, tlc] = tangentLine(abratio^2 * bsquare,bsquare,cos,sin,[minx,miny],[cx,cy]);
+%         constrain = [constrain ; tla, tlb, tlc];
+%     end
+    
     
     % delete points
 %     fprintf('length of barriers before delete');
@@ -97,6 +109,12 @@ while(~isempty(barriers))
             j = j + 1;
         end
     end
+    
+%     if (j >= 0)
+%         ellipse{length(ellipse) + 1} = [sqrt(abratio^2 * bsquare), sqrt(bsquare), cos,sin,cx,cy];
+%         [tla, tlb, tlc] = tangentLine(abratio^2 * bsquare,bsquare,cos,sin,[minx,miny],[cx,cy]);
+%         constrain = [constrain ; tla, tlb, tlc];
+%     end
 %     fprintf('num deleted');
 %     disp(j);   
 %     fprintf('length of barriers after delete');

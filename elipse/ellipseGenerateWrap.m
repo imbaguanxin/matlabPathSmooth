@@ -70,6 +70,15 @@ switch mode
     otherwise
 end
 
+% for i = 1: length(allEllipse)
+%     fprintf("segment NO");
+%     disp(i);
+%     fprintf("Ellipse count");
+%     disp(length(allEllipse{i}));
+%     fprintf("constraint count");
+%     disp(length(constrain{i}));
+% end
+
 % mark the paths
 for i = 1 : length(path)
     pt = map.pointToXYCor(path{i});

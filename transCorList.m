@@ -1,6 +1,5 @@
 function result = transCorList(pathList, map)
-%TRANSCORLIST Summary of this function goes here
-%   Detailed explanation goes here
+%TRANSCORLIST transform corrdinates from image to normal
     % transform corrdinates
 result = cell(length(pathList),1);
 for i = 1 : length(pathList)

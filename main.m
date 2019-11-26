@@ -18,8 +18,7 @@ map = map2d(sizeRow,sizeCol);
 map.cellStatus = mapStatus;
 
 % build path
-path = {[11,19],[90,120],[400,120],[750,120],[750,350],[500,340]};
-% path = {[500,340],[750,350],[750,120],[400,120],[90,120],[11,19]};
+path = {[11,19],[90,120],[400,120],[750,120],[750,350],[600,340],[450,340]};
 % set radius
 radius = 50;
 
@@ -35,16 +34,18 @@ visMode = 'ellipse-only';
 % run the function, all constrain is stored
 constraints = ellipseGenerateWrap(map,path,picSize,radius,visMode);
 
+constraints = constraintsSelector(constraints);
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % auto part
 
-newCons = constraints(1:4);
-newPath = path(1:5);
+newCons = constraints(1:6);
+newPath = path(1:7);
 newPath = transCorList(newPath,map);
 
 vmax = 13;
 amax = 3;
-% [r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax);
+[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax);
 disp(r);
 plotSmoothPath(time, r);
 
