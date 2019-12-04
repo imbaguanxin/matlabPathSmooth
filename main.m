@@ -18,7 +18,8 @@ map = map2d(sizeRow,sizeCol);
 map.cellStatus = mapStatus;
 
 % build path
-path = {[11,19],[90,120],[400,120],[750,120],[750,350],[600,340],[450,340]};
+% path = {[11,19],[90,120],[400,120],[750,120],[750,350],[600,340]};
+path = {[11,19],[90,120],[80,400],[80,570],[450,570],[450,350],[750,350],[750,100]};
 % set radius
 radius = 50;
 
@@ -39,8 +40,8 @@ constraints = constraintsSelector(constraints);
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % auto part
 
-newCons = constraints(1:6);
-newPath = path(1:7);
+newCons = constraints;%(1:4);
+newPath = path;%(1:5);
 newPath = transCorList(newPath,map);
 
 vmax = 13;
