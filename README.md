@@ -21,4 +21,4 @@ Finally, it is going to find path and store the path in the `path` variable in t
 Sample result:
 ![astar img](/pic/astarResult.jpg)
 
-red - searched block; blud - final path.
+red - searched block, blue - final path.
