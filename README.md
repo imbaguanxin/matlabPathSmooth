@@ -10,17 +10,9 @@ The `Astar` package provides an astar path finder.
 
 Change the input source of the map or manually type the map out is possible.
 
-1. read map from file:
+1. read map from file: Change the input source file. The file should be a 2d img of the map. I assume darker part is obstacle.
 
-    Change the input source file. The file should be a 2d img of the map. I assume darker part is obstacle.
-
-2. manually type the map:
-
-    like line 17 to 29. Write your own map matrix and give the value to `map.cellStatus`.
-
-    legend: 0 - blank, 1 - obstacle
-
-    You can simply uncomment the given `map.cellStatus` sample and substitute my sample map with yours.
+2. manually type the map: like line 17 to 29. Write your own map matrix and give the value to `map.cellStatus`. You can simply uncomment the given `map.cellStatus` sample and substitute my sample map with yours. (0 - blank, 1 - obstacle)
 
 Then you need to manually set the start point and the end point. The point is a image coordinate: [row, column].
 
