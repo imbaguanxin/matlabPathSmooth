@@ -1,4 +1,4 @@
-img = imread('D:/repo/matlabPathSmooth/data/garageMap.jpg');
+img = imread('../data/garageMap.jpg');
 img = rgb2gray(img);
 [sizeRow, sizeCol] = size(img);
 mapStatus = zeros(sizeRow,sizeCol);
