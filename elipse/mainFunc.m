@@ -13,8 +13,8 @@ cx = (startXY(1) + destXY(1))/2;
 cy = (startXY(2) + destXY(2))/2;
 % the minimum b square is smaller than a square
 minbsquare = aSquare;
-minx = 0;
-miny = 0;
+minx = 1;
+miny = 1;
 % find how the ellipse is turned from a standard ellipse, the turning angle
 % is theta.
 % sin means sin(-theta), cos means cos(-theta)

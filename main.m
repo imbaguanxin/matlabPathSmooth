@@ -46,16 +46,20 @@ newPath = transCorList(newPath,map);
 
 vmax = 13;
 amax = 3;
-[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax);
+[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 10, false, 10);
 disp(r);
-plotSmoothPath(time, r);
+mat = plotSmoothPath(time, r);
+disp(mat);
 
-% newCons = constraints(4:5);
-% newPath = path(4:6);
-% [r1,A,B,time1,state] = mainConstraintInitState(newCons, newPath, map, amax, vmax, initState);
-% plotSmoothPath(time1, r1);
+% fid = fopen('result.csv', 'w');
+% legend = {'time', 'x', 'y' ,'vx', 'vy'};
+% fprintf(fid, '%s,%s,%s,%s,%s\n', legend{:});
+% for i = 1: length(mat)
+%     [row,col] = size(mat(i));
+%     for j = 1: 
+% end
 
-
+%===========================================
 % x to t, y to t velocity
 % t = 0:0.1:15;
 % x = z(1) * 4 * t.^3 + z(2) * 3 * t.^2 + z(3) * 2 * t + z(4);

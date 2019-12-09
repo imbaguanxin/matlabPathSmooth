@@ -1,4 +1,4 @@
-function [result,A,B,time,finalState] = mainConstraint(constraints,changedPath,amax,vmax)
+function [result,A,B,time,finalState] = mainConstraint(constraints,changedPath,amax,vmax,consNum,whetherfindtime, uniformTime)
 %MAINCONSTRAINT Summary of this function goes here
 %   Detailed explanation goes here
 options = optimoptions('quadprog');
@@ -12,7 +12,11 @@ if (length(constraints) == length(changedPath) - 1)
     % calculate time
     time = zeros(1,numOfTotalSeg);
     for i = 1:length(time)
-        time(i) = 10; %findTime(changedPath{i},changedPath{i+1},amax,vmax);
+        if (whetherfindtime)
+            time(i) = findTime(changedPath{i},changedPath{i+1},amax,vmax);
+        else
+            time(i) = uniformTime;
+        end
     end
     % build constrain A and B
     A = [];
@@ -23,7 +27,7 @@ if (length(constraints) == length(changedPath) - 1)
         [m,b] = splitConstrain(cons,center);
         Atemp = [];
         Btemp = [];
-        for j = 0 : floor(floor(time(i))/10) : floor(time(i))%floor(floor(time(i))/3)
+        for j = 0 : floor(floor(time(i))/consNum) : floor(time(i))%floor(floor(time(i))/3)
             Atemp = [Atemp; constrain2A(m,numOfOrder,j,i,numOfTotalSeg)];
             Btemp = [Btemp; b];
         end
