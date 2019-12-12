@@ -32,12 +32,12 @@ visMode = 'ellipse-only';
 % % visMode = 'line-only';
 % run the function, all constrain is stored
 constraints = ellipseGenerateWrap(map,path,picSize,radius,visMode);
-% 
+
 constraints = constraintsSelector(constraints);
-% 
-% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % auto part
-% 
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% auto part
+
 newCons = constraints(1:4);
 newPath = path(1:5);
 newPath = transCorList(newPath,map);
@@ -59,28 +59,4 @@ for i = 1: length(mat)
         fprintf(fid, '%3.3f,%3.3f,%3.3f,%3.3f,%3.3f\n', mat{i}(j,:));
     end
 end
-% 
-% %===========================================
-% % x to t, y to t velocity
-% % t = 0:0.1:15;
-% % x = z(1) * 4 * t.^3 + z(2) * 3 * t.^2 + z(3) * 2 * t + z(4);
-% % y = z(6) * 4 * t.^3 + z(7) * 3 * t.^2 + z(8) * 2 * t + z(9);
-% % plot(t,x);
-% % hold on;
-% % plot(t,y);
-% 
-% % x to t, y to t acceleration
-% % t = 0:0.1:15;
-% % x = z(1) * 12 * t.^2 + z(2) * 6 * t.^2 + z(3) * 2;
-% % y = z(6) * 12 * t.^2 + z(7) * 6 * t.^2 + z(8) * 2;
-% % plot(t,x);
-% % hold on;
-% % plot(t,y);
-% 
-% % x to t, y to t jerk
-% % t = 0:0.1:15; 
-% % x = z(1) * 24 * t.^1 + z(2) * 6;
-% % y = z(6) * 24 * t.^1 + z(7) * 6;
-% % plot(t,x);
-% % hold on;
-% % plot(t,y);
+

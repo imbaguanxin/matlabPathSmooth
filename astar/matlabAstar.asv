@@ -44,12 +44,13 @@ directionList = {[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]};
 
 loopCount = 0;
 
-% f+g : diagonal / cartesian
-scoreFlag = 'diagonal';
+% f+g : diagonal / cart
+scoreFlag = "diagonal";
+
 
 % main loop of A*
 if (~map.isBlank(endPoint(1), endPoint(2)) || ~map.isBlank(startPoint(1),startPoint(2)))
-    fprintf("Not reachable, please reset the destination\n");
+    fprintf("Not reachable, please stop the program\n");
 else 
     while(~isempty(waitingList))
         loopCount = loopCount + 1;
@@ -67,15 +68,12 @@ else
             % (not blocked,not searched)
             if (map.isBlank(nextPoint(1), nextPoint(2)))
                 % if blank, add the nextPoint and its cost to waitinglist
-                if (scoreFlag == 'diagonal')
-                    score = findScoreDiagonal(candidate,nextPoint,endPoint);
-                elseif (scoreFlag == 'cartesian')
-                    score = findScore(candidate,nextPoint,endPoint);
-                else
-                    score = findScoreDiagonal(candidate,nextPoint,endPoint);
+                if (scoreFlag == "diagnoal")
+                    score = findScoreDiagonal
+                elseif (scoreFlag == "cart")
+                    
                 end
-                waitingList = pushToWaitingList(waitingList, [nextPoint(1), nextPoint(2), score]);
-%                 waitingList{length(waitingList)+1} = [nextPoint(1), nextPoint(2), score];
+                waitingList{length(waitingList)+1} = [nextPoint(1), nextPoint(2),findScore(candidate,nextPoint,endPoint)];
                 % change parent, and status in map of the nextPoint
                 map.cellStatus(nextPoint(1),nextPoint(2)) = 3;
                 map.parent{nextPoint(1),nextPoint(2)} = [candidate(1),candidate(2)];
