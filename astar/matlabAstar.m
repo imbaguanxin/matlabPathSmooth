@@ -32,20 +32,24 @@ map.cellStatus = mapStatus;
 
 % manually alloacate the startpoint and endpoint
 startPoint = [12,13];
-% endPoint = [675,593];
-endPoint = [300,120];
+endPoint = [675,593];
+% endPoint = [780,300];
+% endPoint = [200,100];
+
+% f+g : diagonal / cartesian
+scoreFlag = 'diagnoal';
 
 % initialize the waiting list
 waitingList = cell(0);
-waitingList{1} = [startPoint, distance(startPoint, endPoint)] ;
+[score, h] = findScore(startPoint, startPoint, endPoint, 0, scoreFlag);
+waitingList{1} = [startPoint, distance(startPoint, endPoint), h] ;
 map.parent{startPoint(1),startPoint(2)} = [startPoint(1),startPoint(2)];
 % write down the possible direction lists (up down right left)
-directionList = {[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]};
+directionList = {[1,1],[-1,1],[-1,-1],[1,-1],[0,1],[0,-1],[1,0],[-1,0]};
 
 loopCount = 0;
 
-% f+g : diagonal / cartesian
-scoreFlag = 'diagonal';
+
 
 % main loop of A*
 if (~map.isBlank(endPoint(1), endPoint(2)) || ~map.isBlank(startPoint(1),startPoint(2)))
@@ -62,20 +66,14 @@ else
         for i = 1 : length(directionList)
             %find next possible point
             candi = [candidate(1), candidate(2)];
+            fatherH = candidate(4);
             nextPoint = candi + directionList{i};
             % Check whether the nextpoint is blank in the map 
             % (not blocked,not searched)
             if (map.isBlank(nextPoint(1), nextPoint(2)))
                 % if blank, add the nextPoint and its cost to waitinglist
-                if (scoreFlag == 'diagonal')
-                    score = findScoreDiagonal(candidate,nextPoint,endPoint);
-                elseif (scoreFlag == 'cartesian')
-                    score = findScore(candidate,nextPoint,endPoint);
-                else
-                    score = findScoreDiagonal(candidate,nextPoint,endPoint);
-                end
-                waitingList = pushToWaitingList(waitingList, [nextPoint(1), nextPoint(2), score]);
-%                 waitingList{length(waitingList)+1} = [nextPoint(1), nextPoint(2), score];
+                [score, h] = findScore(candidate, nextPoint, endPoint, fatherH, scoreFlag);
+                waitingList{length(waitingList)+1} = [nextPoint(1), nextPoint(2), score, h];
                 % change parent, and status in map of the nextPoint
                 map.cellStatus(nextPoint(1),nextPoint(2)) = 3;
                 map.parent{nextPoint(1),nextPoint(2)} = [candidate(1),candidate(2)];
