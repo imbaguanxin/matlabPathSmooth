@@ -46,7 +46,8 @@ vmax = 13;
 amax = 3;
 [r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 5, false, 5);
 disp(r);
-mat = plotSmoothPath(time, r);
+dt = 0.1;
+mat = plotSmoothPath(time, r, dt);
 disp(mat);
  
 % format long g; % no scientific notation
