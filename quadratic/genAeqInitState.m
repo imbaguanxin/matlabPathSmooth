@@ -3,10 +3,16 @@ function result = genAeqInitState(inputT)
 %   Detailed explanation goes here
 lastT = inputT(length(inputT));
 len = length(inputT);
-
 % hard code the start point and end point constraints
-hardCodeConstraints = zeros(8,10*len);
+hardCodeConstraints = zeros(6,10*len);
 % start point constraints
+% start speed
+hardCodeConstraints(5,4) = 1;
+hardCodeConstraints(6,9) = 1;
+% start acc
+% hardCodeConstraints(7,3) = 2;
+% hardCodeConstraints(8,6) = 2;
+% start position
 hardCodeConstraints(1,5) = 1;
 hardCodeConstraints(2,10) = 1;
 % end point constraints
@@ -20,12 +26,6 @@ hardCodeConstraints(4, 5 * 2 * (len - 1) + 7) = lastT(1)^3;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 8) = lastT(1)^2;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 9) = lastT(1)^1;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 10) = 1;
-% start point velocity constrain
-hardCodeConstraints(5,4) = 1;
-hardCodeConstraints(6,9) = 1;
-% start point accelerationg constrain
-hardCodeConstraints(7,3) = 2;
-hardCodeConstraints(8,8) = 2;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % hardCodeConstraints = zeros(4*length(inputT),10*len);
 % for i = 1 : length(inputT)

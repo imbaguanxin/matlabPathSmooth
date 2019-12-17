@@ -1,38 +1,31 @@
-img = imread('../data/garageMap.jpg');
-img = rgb2gray(img);
-[sizeRow, sizeCol] = size(img);
-mapStatus = zeros(sizeRow,sizeCol);
-for i = 1 : sizeRow
-    for j = 1 : sizeCol
-        temp = img(i,j);
-        if (temp < 128)
-            mapStatus(i,j) = 1;
-        end
-    end
-end
+% build map
+sizeRow = 600;
+sizeCol = 600;
+mapStatus = zeros(sizeRow, sizeCol);
+mapStatus(1,:) = 1;
+mapStatus(:,1) = 1;
+mapStatus(600,:) = 1;
+mapStatus(:,600) = 1;
+% map 1 no balloon
+% mapStatus(400:500, 100:200) = 1;
+% mapStatus(450:550, 350:450) = 1;
+% mapStatus(200:300, 200:300) = 1;
+% mapStatus(50:150, 50:150) = 1;
+% mapStatus(100:320, 500:600) = 1;
+% map 2 balloon
+mapStatus(380:520, 80:220) = 1;
+mapStatus(430:570, 330:470) = 1;
+mapStatus(180:320, 180:320) = 1;
+mapStatus(30:170, 30:170) = 1;
+mapStatus(80:340, 480:620) = 1;
 
-% 
 map = map2d(sizeRow,sizeCol);
 map.cellStatus = mapStatus;
-% map.cellStatus = [0,0,0,0,0,0,0,0,1,0,0,0,0,0;
-%                   0,0,1,0,0,0,0,0,1,0,0,0,0,0;
-%                   0,0,1,1,1,1,1,0,1,0,0,0,0,0;
-%                   0,1,1,1,1,0,0,0,1,0,0,0,0,0;
-%                   0,0,1,1,1,0,0,1,1,1,1,1,1,1;
-%                   0,0,0,0,0,0,0,0,0,0,0,0,0,0;
-%                   0,0,1,0,1,0,0,0,0,0,0,0,0,0;
-%                   0,1,1,1,0,1,0,1,1,1,1,1,1,1;
-%                   0,0,0,1,0,0,0,0,0,0,0,0,0,0;
-%                   0,1,1,1,0,0,1,1,1,1,1,1,0,0;
-%                   0,0,0,1,0,0,1,0,0,0,0,1,0,0;
-%                   1,1,1,1,0,0,1,0,1,0,0,1,0,0;
-%                   0,0,0,0,0,0,0,0,1,0,0,1,0,0];
-% map status: 0 - blank, 1 - obstacle, 3 - searched, 4 - path
 
 
 % manually alloacate the startpoint and endpoint
-startPoint = [12,13];
-endPoint = [675,593];
+startPoint = [20,20];
+endPoint = [570,570];
 % endPoint = [780,300];
 % endPoint = [200,100];
 
@@ -48,8 +41,6 @@ map.parent{startPoint(1),startPoint(2)} = [startPoint(1),startPoint(2)];
 directionList = {[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[-1,-1],[1,-1]};
 
 loopCount = 0;
-
-
 
 % main loop of A*
 if (~map.isBlank(endPoint(1), endPoint(2)) || ~map.isBlank(startPoint(1),startPoint(2)))
@@ -98,6 +89,7 @@ else
     % parent of the endPoint.
     % end -> end.parent -> end.parent.parent -> ... -> start
     if (~isempty(map.findParent(endPoint(1),endPoint(2))))
+        % path
         path{1} = endPoint;
         map.cellStatus(endPoint(1),endPoint(2)) = 4;
         parent = map.findParent(endPoint(1),endPoint(2));
@@ -111,8 +103,25 @@ else
 
     % reverse the path
     path = reverseCell(path);
+    
+    path_mat = [];
+    for i = 1 : length(path)
+        wayPoint = path{i};
+        path_mat(i, 1) = wayPoint(1);
+        path_mat(i, 2) = wayPoint(2);
+    end
 end
 
 imgResult = showMapImg(map);
-imshow(imgResult);
+imshow(imgResult);    
+
+% format long g; % no scientific notation
+fid = fopen('astar_result_map_b.csv', 'w');
+legend = {'x', 'y'};
+fprintf(fid, '%s,%s\n', legend{:});
+[row,col] = size(path_mat);
+for j = 1: row
+    fprintf(fid, '%3.3f,%3.3f\n', path_mat(j, :));
+end
+
 

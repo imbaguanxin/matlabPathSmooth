@@ -1,8 +1,8 @@
-function [result,A,B,time,finalState] = mainConstraint(constraints,changedPath,amax,vmax,consNum,whetherfindtime, uniformTime)
+function [result,A,B,time,finalState] = mainConstraint(constraints,changedPath,amax,vmax,consNum,whetherfindtime, uniformTime, maxIter)
 %MAINCONSTRAINT Summary of this function goes here
 %   Detailed explanation goes here
 options = optimoptions('quadprog');
-options = optimoptions(options,'MaxIterations', 1e+4); 
+options = optimoptions(options,'MaxIterations', maxIter); 
 numOfOrder = 5;
 numOfTotalSeg = length(changedPath) - 1;
 fprintf("segment number:");
@@ -27,7 +27,7 @@ if (length(constraints) == length(changedPath) - 1)
         [m,b] = splitConstrain(cons,center);
         Atemp = [];
         Btemp = [];
-        for j = 0 : floor(floor(time(i))/consNum) : floor(time(i))%floor(floor(time(i))/3)
+        for j = 0 : time(i)/consNum : floor(time(i))
             Atemp = [Atemp; constrain2A(m,numOfOrder,j,i,numOfTotalSeg)];
             Btemp = [Btemp; b];
         end
