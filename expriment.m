@@ -24,6 +24,7 @@
 % map = map2d(sizeRow,sizeCol);
 % map.cellStatus = mapStatus;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 map = genWareHouseMap();
 img = map.showMapMatrixImg();
 imshow(img);
