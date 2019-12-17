@@ -1,18 +1,18 @@
 % build map
 % build map
-sizeRow = 600;
-sizeCol = 600;
-mapStatus = zeros(sizeRow, sizeCol);
-mapStatus(1,:) = 1;
-mapStatus(:,1) = 1;
-mapStatus(600,:) = 1;
-mapStatus(:,600) = 1;
+% sizeRow = 600;
+% sizeCol = 600;
+% mapStatus = zeros(sizeRow, sizeCol);
+% mapStatus(1,:) = 1;
+% mapStatus(:,1) = 1;
+% mapStatus(600,:) = 1;
+% mapStatus(:,600) = 1;
 % map 1
-mapStatus(400:500, 100:200) = 1;
-mapStatus(450:550, 350:450) = 1;
-mapStatus(200:300, 200:300) = 1;
-mapStatus(50:150, 50:150) = 1;
-mapStatus(100:320, 500:600) = 1;
+% mapStatus(400:500, 100:200) = 1;
+% mapStatus(450:550, 350:450) = 1;
+% mapStatus(200:300, 200:300) = 1;
+% mapStatus(50:150, 50:150) = 1;
+% mapStatus(100:320, 500:600) = 1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % map 2
 % mapStatus(100:200, 100:200) = 1;
@@ -32,17 +32,26 @@ imshow(img);
 % build path
 % path = {[25,25],[250,50],[400,300],[400,500],[550,550]};
 % path = {[25,25],[200,50],[150, 300],[350,400],[450,550],[550,575]};
-startPoint = [25,25];
-endPoint = [975,1975];
-scoreFlag = 'manhattan';
+startPoint = [20,20];
+endPoint = [980,1980];
+scoreFlag = 'cartesian';
+% scoreFlag = 'manhattan';
 logFileName = 'astarWareHouse.csv';
-gridSize = 10;
-[path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, 10);
+gridSize = 20;
+[path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
 x = path_mat(:,1);
 y = path_mat(:,2);
 hold on;
-plot(y, x);
-path = csvPathSelect(filename);
+plot(x, y);
+path = csvPathSelect(logFileName);
+x = [];
+y = [];
+for i = 1 : length(path)
+    x = [x; path{i}(1)];
+    y = [y; path{i}(2)];
+end
+hold on;
+plot(x, y);
 % path(6) = [];
 % map 2 path
 % path = {[50,50],[225,50],[225,225],[375,225],[375,375],[550,375],[550,550]};
@@ -68,8 +77,8 @@ constraints = ellipseGenerateWrap(map,path,picSize,radius,visMode);
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % auto part
 
-newCons = constraints;
-newPath = path;
+newCons = constraints{1:4};
+newPath = path{1:5};
 newPath = transCorList(newPath,map);
 
 vmax = 13;

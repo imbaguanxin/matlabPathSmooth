@@ -1,7 +1,7 @@
 function [path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize)
 %UNTITLED this is the main function of the astar path planning.
 %   map - a map2d object, startPoint/endPoint - horizantal 2d vector,
-%   scoreFlag - string: "diagnoal" or "cartesian", logFileName - the file
+%   scoreFlag - string: "diagnoal", "cartesian" or "manhattan", logFileName - the file
 %   name of the path data.
 
 % build map
@@ -11,8 +11,8 @@ waitingList = cell(0);
 waitingList{1} = [startPoint, distance(startPoint, endPoint), h] ;
 map.parent{startPoint(1),startPoint(2)} = [startPoint(1),startPoint(2)];
 % write down the possible direction lists (up down right left)
-directionList = {[0,1],[0,-1],[1,0],[-1,0]};
-% directionList = {[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[-1,-1],[1,-1]};
+% directionList = {[0,1],[0,-1],[1,0],[-1,0]};
+directionList = {[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[-1,-1],[1,-1]};
 for i = 1 : length(directionList)
     directionList{i} = directionList{i} * gridSize;
 end

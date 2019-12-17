@@ -5,6 +5,7 @@ csv = csvread(filename,1);
 [row,~] = size(csv);
 currDir = csv(2,:) - csv(1,:);
 log = {};
+log{1} = csv(1,:);
 for i = 2: row
     dir = csv(i,:) - csv(i-1,:);
     boovec = currDir ~= dir;
