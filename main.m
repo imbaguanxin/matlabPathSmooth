@@ -30,8 +30,9 @@ picSize = 900;
 % possible modes: 'ellipse-only', 'line-only', 'all'
 % input other command will result in a map with safe areas without ellipse
 % and lines.
-visMode = 'ellipse-only';
+% visMode = 'ellipse-only';
 % visMode = 'line-only';
+visMode = '';
 % run the function, all constrain is stored
 constraints = ellipseGenerateWrap(map,path,picSize,radius,visMode);
 
@@ -40,24 +41,29 @@ constraints = constraintsSelector(constraints);
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % auto part
 
-newCons = constraints;%(1:4);
-newPath = path;%(1:5);
+newCons = constraints;
+newPath = path;
 newPath = transCorList(newPath,map);
 
 vmax = 13;
 amax = 3;
-[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 10, false, 10);
+maxIter = 10000;
+[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 10, false, 10, maxIter);
 disp(r);
-mat = plotSmoothPath(time, r);
+dt = 0.1;
+mat = plotSmoothPath(time, r, dt, false);
 disp(mat);
 
-% fid = fopen('result.csv', 'w');
-% legend = {'time', 'x', 'y' ,'vx', 'vy'};
-% fprintf(fid, '%s,%s,%s,%s,%s\n', legend{:});
-% for i = 1: length(mat)
-%     [row,col] = size(mat(i));
-%     for j = 1: 
-% end
+% format long g; % no scientific notation
+fid = fopen('main_result.csv', 'w');
+legend = {'time', 'x', 'y' ,'vx', 'vy'};
+fprintf(fid, '%s,%s,%s,%s,%s\n', legend{:});
+for i = 1: length(mat)
+    [row,col] = size(mat{i});
+    for j = 1: row
+        fprintf(fid, '%3.3f,%3.3f,%3.3f,%3.3f,%3.3f\n', mat{i}(j,:));
+    end
+end
 
 %===========================================
 % x to t, y to t velocity

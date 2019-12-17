@@ -63,7 +63,7 @@ maxIter = 10000;
 [r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 5, false, 5, maxIter);
 disp(r);
 dt = 0.1;
-mat = plotSmoothPath(time, r, dt);
+mat = plotSmoothPath(time, r, dt, false);
 % disp(mat);
  
 % format long g; % no scientific notation
@@ -89,5 +89,5 @@ maxIter = 50000;
 [r,A,B,time,initState] = mainConstraintInitState(newCons, newPath, amax, vmax, [vx vy], 5, false, 5, maxIter);
 disp(r);
 dt = 0.1;
-mat = plotSmoothPath(time, r, dt);
+mat = plotSmoothPath(time, r, dt, false);
 % disp(mat);
