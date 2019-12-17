@@ -39,5 +39,6 @@ endPoint = [675,593];
 % f+g : diagonal / cartesian
 scoreFlag = 'diagnoal';
 logName = 'matlabAstar.csv';
-[pathresult, imgResult] = astar(map, startPoint, endPoint, scoreFlag, logName);
+gridSize = 1;
+[pathresult, imgResult] = astar(map, startPoint, endPoint, scoreFlag, logName, gridSize);
 

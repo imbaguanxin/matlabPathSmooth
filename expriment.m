@@ -13,23 +13,35 @@ mapStatus(450:550, 350:450) = 1;
 mapStatus(200:300, 200:300) = 1;
 mapStatus(50:150, 50:150) = 1;
 mapStatus(100:320, 500:600) = 1;
-
-% map 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% map 2
 % mapStatus(100:200, 100:200) = 1;
 % mapStatus(250:350, 250:350) = 1;
 % mapStatus(400:500, 400:500) = 1;
 % mapStatus(400:500, 100:200) = 1;
 % mapStatus(250:350, 100:200) = 1;
 % mapStatus(400:500, 250:350) = 1;
+% map = map2d(sizeRow,sizeCol);
+% map.cellStatus = mapStatus;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+map = genWareHouseMap();
+img = map.showMapMatrixImg();
+imshow(img);
 
-map = map2d(sizeRow,sizeCol);
-map.cellStatus = mapStatus;
 
 % build path
 % path = {[25,25],[250,50],[400,300],[400,500],[550,550]};
 % path = {[25,25],[200,50],[150, 300],[350,400],[450,550],[550,575]};
-filename = './astar/astar_result_map_b.csv';
+startPoint = [25,25];
+endPoint = [975,1975];
+scoreFlag = 'manhattan';
+logFileName = 'astarWareHouse.csv';
+gridSize = 10;
+[path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, 10);
+x = path_mat(:,1);
+y = path_mat(:,2);
+hold on;
+plot(y, x);
 path = csvPathSelect(filename);
 % path(6) = [];
 % map 2 path
