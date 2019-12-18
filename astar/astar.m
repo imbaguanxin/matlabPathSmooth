@@ -1,7 +1,7 @@
 function [path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize)
 %UNTITLED this is the main function of the astar path planning.
 %   map - a map2d object, startPoint/endPoint - horizantal 2d vector,
-%   scoreFlag - string: "diagnoal", "cartesian" or "manhattan", logFileName - the file
+%   scoreFlag - string: "diagonal", "cartesian" or "manhattan", logFileName - the file
 %   name of the path data.
 
 % build map

@@ -23,7 +23,7 @@ for i = 1 : length(timeList)
         + 2 * vector(start + 3) * t + vector(start + 4);
     vy = 4 * vector(start + 6) * t.^3 + 3 * vector(start + 7) * t.^2 ...
         + 2 * vector(start + 8) * t + vector(start + 9);
-    group = [rt.', x.', y.', vx.', vy.'];
+    group = [x.', y.', vx.', vy.', rt.'];
     result{i} = group;
     plot(x,y);
     hold on;

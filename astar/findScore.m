@@ -8,7 +8,7 @@ y1 = nextp(2);
 x2 = top(1);
 y2 = top(2);
 switch(method)
-    case "diagnoal"
+    case "diagonal"
         g = abs(abs(x2-x1) - abs(y2-y1)) + ...
             sqrt(2) * min(abs(x2 - x1), abs(y2 - y1));
         h = distance(fromp,nextp) + fatherH;
