@@ -77,6 +77,10 @@ path(4) = [];
 path(6) = [];
 path(7) = [];
 path(10) = [];
+path(4) = [];
+path{8} = [370,468];
+% path{9} = [380,525];
+% path{9} = 
 x = [];
 y = [];
 for i = 1 : length(path)
@@ -109,15 +113,15 @@ constraints = ellipseGenerateWrap(map,path,picSize,radius,visMode);
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % auto part
 
-newCons = constraints(1:11);
-newPath = path(1:12);
+newCons = constraints;
+newPath = path;
 disp(newPath);
 newPath = transCorList(newPath,map);
 
-vmax = 200;
-amax = 10;
+vmax = 300;
+amax = 5;
 maxIter = 10000;
-[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 5, false, 10, maxIter);
+[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 20, false, 3, maxIter);
 disp(r);
 dt = 0.1;
 mat = plotSmoothPath(time, r, dt, false);
