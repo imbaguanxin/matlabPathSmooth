@@ -29,39 +29,39 @@ mapStatusBallooned(40:160, 40:160) = 1;
 mapStatusBallooned(90:330, 490:610) = 1;
 mapBallooned = map2d(sizeRow,sizeCol);
 mapBallooned.cellStatus = mapStatusBallooned;
-%%
-% % show origin image
-% img = map.showMapMatrixImg();
-% imshow(img);
-% % show ballooned image
-% figure;
-% imgBallooned = mapBallooned.showMapMatrixImg();
-% imshow(imgBallooned);
-% 
+%% generate astar origin map
+% show origin image
+img = map.showMapMatrixImg();
+imshow(img);
+% show ballooned image
+figure;
+imgBallooned = mapBallooned.showMapMatrixImg();
+imshow(imgBallooned);
+
 % % build path
-% startPoint = [25,25];
-% endPoint = [550,550];
-% scoreFlag = 'diagonal'; %'manhattan';
-% logFileName = 'realexpMap1-astar.csv';
-% gridSize = 1;
-% figure;
-% [path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
-% x = path_mat(:,1);
-% y = path_mat(:,2);
-% hold on;
-% plot(y, x);
-%% ballooned:
-% startPoint = [25,25];
-% endPoint = [550,550];
-% scoreFlag = 'diagonal';
-% logFileName = 'realexpMap1Ballooned-astar.csv';
-% gridSize = 1;
-% figure;
-% [path_mat, imgResult] = astar(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
-% x = path_mat(:,1);
-% y = path_mat(:,2);
-% hold on;
-% plot(y, x);
+startPoint = [25,25];
+endPoint = [550,550];
+scoreFlag = 'diagonal'; %'manhattan';
+logFileName = 'realexpMap1-astar.csv';
+gridSize = 1;
+figure;
+[path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+x = path_mat(:,1);
+y = path_mat(:,2);
+hold on;
+plot(y, x);
+%%  generate astar ballooned map:
+startPoint = [25,25];
+endPoint = [550,550];
+scoreFlag = 'diagonal';
+logFileName = 'realexpMap1Ballooned-astar.csv';
+gridSize = 1;
+figure;
+[path_mat, imgResult] = astar(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+x = path_mat(:,1);
+y = path_mat(:,2);
+hold on;
+plot(y, x);
 %%
 logFileName = 'realexpMap1Ballooned-astar.csv';
 path = csvPathSelect(logFileName);
