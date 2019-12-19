@@ -47,22 +47,22 @@ imshow(img);
 
 %% generate astar on origin map
 % build path
-% startPoint = [25,25];
-% endPoint = [575,575];
-% scoreFlag = 'diagonal';%'manhattan';
-% logFileName = 'realexpMap2-astar.csv';
-% gridSize = 1;
-% figure;
-% [path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
-% x = path_mat(:,1);
-% y = path_mat(:,2);
-% hold on;
-% plot(y, x);
+startPoint = [25,570];
+endPoint = [570,25];
+scoreFlag = 'diagonal';%'manhattan';
+logFileName = 'realexpMap3-astar.csv';
+gridSize = 1;
+figure;
+[path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+x = path_mat(:,1);
+y = path_mat(:,2);
+hold on;
+plot(y, x);
 %% generate astar ballooned map:
 % startPoint = [25,25];
 % endPoint = [575,575];
 % scoreFlag = 'diagonal';
-% logFileName = 'realexpMap2Ballooned-astar.csv';
+% logFileName = 'realexpMap3Ballooned-astar.csv';
 % gridSize = 1;
 % figure;
 % [path_mat, imgResult] = astar(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
@@ -71,7 +71,7 @@ imshow(img);
 % hold on;
 % plot(y, x);
 %% find selected path for path smooth
-logFileName = 'realexpMap2Ballooned-astar.csv';
+logFileName = 'realexpMap3Ballooned-astar.csv';
 path = csvPathSelect(logFileName);
 path(4) = [];
 path(6) = [];
@@ -128,7 +128,7 @@ mat = plotSmoothPath(time, r, dt, false);
 disp(mat);
  
 % format long g; % no scientific notation
-fid = fopen('realExpriment2-smooth.csv', 'w');
+fid = fopen('realExpriment3-smooth.csv', 'w');
 legend = {'time', 'x', 'y' ,'vx', 'vy'};
 fprintf(fid, '%s,%s,%s,%s,%s\n', legend{:});
 for i = 1: length(mat)
