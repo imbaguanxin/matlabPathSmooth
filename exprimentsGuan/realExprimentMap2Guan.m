@@ -56,7 +56,7 @@ imshow(img);
 % logFileName = 'realexpMap2-astar.csv';
 % gridSize = 1;
 % figure;
-% [path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+% [path_mat, imgResult] = astarNew(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
 % x = path_mat(:,1);
 % y = path_mat(:,2);
 % hold on;
@@ -68,14 +68,14 @@ imshow(img);
 % logFileName = 'realexpMap2Ballooned-astar.csv';
 % gridSize = 1;
 % figure;
-% [path_mat, imgResult] = astar(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+% [path_mat, imgResult] = astarNew(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
 % x = path_mat(:,1);
 % y = path_mat(:,2);
 % hold on;
 % plot(y, x);
 %% find selected path for path smooth
 logFileName = 'realexpMap2Ballooned-astar.csv';
-path = csvPathSelect(logFileName);
+path = csvPathSelectGuan(logFileName);
 path{8} = [375,468];
 x = [];
 y = [];
@@ -117,19 +117,14 @@ newPath = transCorList(newPath,map);
 vmax = 300;
 amax = 5;
 maxIter = 10000;
-timeInterval = zeros(1,length(newCons));
-for i = 1 : length(timeInterval)
-    timeInterval(i) = 3;
-end
-% manually adjust time of each segment.
-[r,A,B,time,initState] = mainConstraintTime(newCons, newPath, amax, vmax, 20, timeInterval, maxIter);
-% disp(r);
+[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 20, false, 3, maxIter);
+disp(r);
 dt = 0.1;
 mat = plotSmoothPath(time, r, dt, false);
 disp(mat);
  
 % format long g; % no scientific notation
-fid = fopen('realExpriment2-1-smooth.csv', 'w');
+fid = fopen('realExpriment2-smooth.csv', 'w');
 legend = {'time', 'x', 'y' ,'vx', 'vy'};
 fprintf(fid, '%s,%s,%s,%s,%s\n', legend{:});
 for i = 1: length(mat)

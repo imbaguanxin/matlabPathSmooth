@@ -27,6 +27,6 @@ map.cellStatus = mapStatus;
 startPoint = [20,20];
 endPoint = [570,570];
 scoreFlag = 'diagnoal';
-logName = 'astar_result_map_b.csv';
+logName = 'astar_test_2.csv';
 gridSize = 1;
 [pathresult, imgResult] = astar(map, startPoint, endPoint, scoreFlag, logName, gridSize);

@@ -1,4 +1,7 @@
 %%
+clc;
+close all;
+clear all;
 % build map
 sizeRow = 600;
 sizeCol = 600;
@@ -7,21 +10,21 @@ mapStatus(1,:) = 1;
 mapStatus(:,1) = 1;
 mapStatus(600,:) = 1;
 mapStatus(:,600) = 1;
-% map 4
-mapStatus(51:150, 50:300) = 1;
-mapStatus(451:550, 50:300) = 1;
-mapStatus(151:450, 200:300) = 1;
-mapStatus(151:250, 50:150) = 1;
-mapStatus(351:450, 50:150) = 1;
-mapStatus(151:250, 350:550) = 1;
-mapStatus(251:350, 450:550) = 1;
-mapStatus(351:450, 350:550) = 1;
-mapStatus(551:600, 200:300) = 1;
-mapStatus(1:150, 451:550) = 1;
+% map 2
+mapStatus(100:200, 100:200) = 1;
+mapStatus(250:350, 250:350) = 1;
+mapStatus(400:500, 400:500) = 1;
+mapStatus(400:500, 100:200) = 1;
+mapStatus(250:350, 100:200) = 1;
+mapStatus(400:500, 250:350) = 1;
+
+mapStatus(100:200, 300:400) = 1;
+mapStatus(100:300, 400:500) = 1;
 map = map2d(sizeRow,sizeCol);
 map.cellStatus = mapStatus;
 img = map.showMapMatrixImg();
 imshow(img);
+
 %%
 % map 2 ballooned
 mapStatusBallooned = zeros(sizeRow, sizeCol);
@@ -29,64 +32,51 @@ mapStatusBallooned(1,:) = 1;
 mapStatusBallooned(:,1) = 1;
 mapStatusBallooned(600,:) = 1;
 mapStatusBallooned(:,600) = 1;
-mapStatusBallooned(41:160, 40:310) = 1;
-mapStatusBallooned(441:560, 40:310) = 1;
-mapStatusBallooned(141:460, 190:310) = 1;
-mapStatusBallooned(141:260, 40:160) = 1;
-mapStatusBallooned(341:460, 40:160) = 1;
-mapStatusBallooned(141:260, 340:560) = 1;
-mapStatusBallooned(241:360, 440:560) = 1;
-mapStatusBallooned(341:460, 340:560) = 1;
-mapStatusBallooned(541:600, 190:310) = 1;
-mapStatusBallooned(1:160, 441:560) = 1;
+mapStatusBallooned(90:210, 90:210) = 1;
+mapStatusBallooned(240:360, 240:360) = 1;
+mapStatusBallooned(390:510, 390:510) = 1;
+mapStatusBallooned(390:510, 90:210) = 1;
+mapStatusBallooned(240:360, 90:210) = 1;
+mapStatusBallooned(390:510, 240:360) = 1;
+
+mapStatusBallooned(90:210, 290:410) = 1;
+mapStatusBallooned(90:310, 390:510) = 1;
+
 mapBallooned = map2d(sizeRow,sizeCol);
 mapBallooned.cellStatus = mapStatusBallooned;
 figure;
 img = mapBallooned.showMapMatrixImg();
 imshow(img);
+
 %% generate astar on origin map
 % build path
-% startPoint = [250,25];
-% endPoint = [350,575];
+% startPoint = [25,25];
+% endPoint = [575,575];
 % scoreFlag = 'diagonal';%'manhattan';
-% logFileName = 'realexpMap4-astar.csv';
+% logFileName = 'realexpMap2-astar.csv';
 % gridSize = 1;
 % figure;
-% [path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+% [path_mat, imgResult] = astarNew(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
 % x = path_mat(:,1);
 % y = path_mat(:,2);
 % hold on;
 % plot(y, x);
 %% generate astar ballooned map:
-% startPoint = [250,25];
-% endPoint = [350,575];
+% startPoint = [25,25];
+% endPoint = [575,575];
 % scoreFlag = 'diagonal';
-% logFileName = 'realexpMap4Ballooned-astar.csv';
+% logFileName = 'realexpMap2Ballooned-astar.csv';
 % gridSize = 1;
 % figure;
-% [path_mat, imgResult] = astar(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+% [path_mat, imgResult] = astarNew(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
 % x = path_mat(:,1);
 % y = path_mat(:,2);
 % hold on;
 % plot(y, x);
 %% find selected path for path smooth
-logFileName = 'realexpMap4Ballooned-astar.csv';
-path = csvPathSelect(logFileName);
-path(18) = [];
-path{17} = [461, 561];
-path(16) = [];
-path{15} = [461, 339];
-path(14) = [];
-path(13) = [];
-path(12) = [];
-path(11) = [];
-path{10} = [114, 339];
-path(9) = [];
-path(8) = [];
-path(6) = [];
-path{5} = [40, 311];
-path(4) = [];
-path{3} = [40, 39];
+logFileName = 'realexpMap2Ballooned-astar.csv';
+path = csvPathSelectGuan(logFileName);
+path{8} = [375,468];
 x = [];
 y = [];
 for i = 1 : length(path)
@@ -125,16 +115,21 @@ disp(newPath);
 newPath = transCorList(newPath,map);
 
 vmax = 300;
-amax = 80;
-maxIter = 100000;
-[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 50, true, 3, maxIter);
-disp(r);
+amax = 5;
+maxIter = 10000;
+timeInterval = zeros(1,length(newCons));
+for i = 1 : length(timeInterval)
+    timeInterval(i) = 3;
+end
+% manually adjust time of each segment.
+[r,A,B,time,initState] = mainConstraintTime(newCons, newPath, amax, vmax, 20, timeInterval, maxIter);
+% disp(r);
 dt = 0.1;
 mat = plotSmoothPath(time, r, dt, false);
 disp(mat);
  
 % format long g; % no scientific notation
-fid = fopen('realExpriment4-smooth.csv', 'w');
+fid = fopen('realExpriment2-1-smooth.csv', 'w');
 legend = {'time', 'x', 'y' ,'vx', 'vy'};
 fprintf(fid, '%s,%s,%s,%s,%s\n', legend{:});
 for i = 1: length(mat)

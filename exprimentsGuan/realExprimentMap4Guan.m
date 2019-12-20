@@ -1,4 +1,7 @@
 %%
+clc;
+clear all;
+close all;
 % build map
 sizeRow = 600;
 sizeCol = 600;
@@ -22,6 +25,7 @@ map = map2d(sizeRow,sizeCol);
 map.cellStatus = mapStatus;
 img = map.showMapMatrixImg();
 imshow(img);
+
 %%
 % map 2 ballooned
 mapStatusBallooned = zeros(sizeRow, sizeCol);
@@ -52,7 +56,7 @@ imshow(img);
 % logFileName = 'realexpMap4-astar.csv';
 % gridSize = 1;
 % figure;
-% [path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+% [path_mat, imgResult] = astarNew(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
 % x = path_mat(:,1);
 % y = path_mat(:,2);
 % hold on;
@@ -64,29 +68,15 @@ imshow(img);
 % logFileName = 'realexpMap4Ballooned-astar.csv';
 % gridSize = 1;
 % figure;
-% [path_mat, imgResult] = astar(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+% [path_mat, imgResult] = astarNew(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
 % x = path_mat(:,1);
 % y = path_mat(:,2);
 % hold on;
 % plot(y, x);
 %% find selected path for path smooth
 logFileName = 'realexpMap4Ballooned-astar.csv';
-path = csvPathSelect(logFileName);
-path(18) = [];
-path{17} = [461, 561];
-path(16) = [];
-path{15} = [461, 339];
-path(14) = [];
-path(13) = [];
-path(12) = [];
-path(11) = [];
-path{10} = [114, 339];
-path(9) = [];
-path(8) = [];
-path(6) = [];
-path{5} = [40, 311];
-path(4) = [];
-path{3} = [40, 39];
+path = csvPathSelectGuan(logFileName);
+path(7) = [];
 x = [];
 y = [];
 for i = 1 : length(path)
@@ -124,14 +114,14 @@ newPath = path;
 disp(newPath);
 newPath = transCorList(newPath,map);
 
-vmax = 300;
-amax = 80;
-maxIter = 100000;
-[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 50, true, 3, maxIter);
-disp(r);
+vmax = 70;
+amax = 40;
+maxIter = 10000;
+[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 5, true, 3, maxIter);
+% disp(r);
 dt = 0.1;
 mat = plotSmoothPath(time, r, dt, false);
-disp(mat);
+% disp(mat);
  
 % format long g; % no scientific notation
 fid = fopen('realExpriment4-smooth.csv', 'w');
