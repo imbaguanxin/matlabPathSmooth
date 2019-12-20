@@ -1,4 +1,7 @@
 %%
+clc;
+close all;
+clear all;
 % build map
 sizeRow = 600;
 sizeCol = 600;
@@ -47,40 +50,33 @@ imshow(img);
 
 %% generate astar on origin map
 % build path
-startPoint = [25,25];
-endPoint = [575,575];
-scoreFlag = 'diagonal';%'manhattan';
-logFileName = 'realexpMap2-astar.csv';
-gridSize = 1;
-figure;
-[path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
-x = path_mat(:,1);
-y = path_mat(:,2);
-hold on;
-plot(y, x);
+% startPoint = [25,25];
+% endPoint = [575,575];
+% scoreFlag = 'diagonal';%'manhattan';
+% logFileName = 'realexpMap2-astar.csv';
+% gridSize = 1;
+% figure;
+% [path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+% x = path_mat(:,1);
+% y = path_mat(:,2);
+% hold on;
+% plot(y, x);
 %% generate astar ballooned map:
-startPoint = [25,25];
-endPoint = [575,575];
-scoreFlag = 'diagonal';
-logFileName = 'realexpMap2Ballooned-astar.csv';
-gridSize = 1;
-figure;
-[path_mat, imgResult] = astar(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
-x = path_mat(:,1);
-y = path_mat(:,2);
-hold on;
-plot(y, x);
+% startPoint = [25,25];
+% endPoint = [575,575];
+% scoreFlag = 'diagonal';
+% logFileName = 'realexpMap2Ballooned-astar.csv';
+% gridSize = 1;
+% figure;
+% [path_mat, imgResult] = astar(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
+% x = path_mat(:,1);
+% y = path_mat(:,2);
+% hold on;
+% plot(y, x);
 %% find selected path for path smooth
 logFileName = 'realexpMap2Ballooned-astar.csv';
 path = csvPathSelect(logFileName);
-path(4) = [];
-path(6) = [];
-path(7) = [];
-path(10) = [];
-path(4) = [];
-path{8} = [370,468];
-% path{9} = [380,525];
-% path{9} = 
+path{8} = [375,468];
 x = [];
 y = [];
 for i = 1 : length(path)

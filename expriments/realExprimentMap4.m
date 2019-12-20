@@ -2,7 +2,6 @@
 clc;
 clear all;
 close all;
-%%
 % build map
 sizeRow = 600;
 sizeCol = 600;
@@ -11,17 +10,22 @@ mapStatus(1,:) = 1;
 mapStatus(:,1) = 1;
 mapStatus(600,:) = 1;
 mapStatus(:,600) = 1;
-% map 3
-mapStatus(1:100, 250:350) = 1;
-mapStatus(101:200, 150:450) = 1;
-mapStatus(201:350, 150:250) = 1;
-mapStatus(251:400, 350:450) = 1;
-mapStatus(401:500, 150:450) = 1;
-mapStatus(501:600, 250:350) = 1;
+% map 4
+mapStatus(51:150, 50:300) = 1;
+mapStatus(451:550, 50:300) = 1;
+mapStatus(151:450, 200:300) = 1;
+mapStatus(151:250, 50:150) = 1;
+mapStatus(351:450, 50:150) = 1;
+mapStatus(151:250, 350:550) = 1;
+mapStatus(251:350, 450:550) = 1;
+mapStatus(351:450, 350:550) = 1;
+mapStatus(551:600, 200:300) = 1;
+mapStatus(1:150, 451:550) = 1;
 map = map2d(sizeRow,sizeCol);
 map.cellStatus = mapStatus;
 img = map.showMapMatrixImg();
 imshow(img);
+
 %%
 % map 2 ballooned
 mapStatusBallooned = zeros(sizeRow, sizeCol);
@@ -29,12 +33,16 @@ mapStatusBallooned(1,:) = 1;
 mapStatusBallooned(:,1) = 1;
 mapStatusBallooned(600,:) = 1;
 mapStatusBallooned(:,600) = 1;
-mapStatusBallooned(1:110, 240:360) = 1;
-mapStatusBallooned(91:210, 140:460) = 1;
-mapStatusBallooned(191:360, 140:260) = 1;
-mapStatusBallooned(241:410, 340:460) = 1;
-mapStatusBallooned(391:510, 140:460) = 1;
-mapStatusBallooned(491:600, 240:360) = 1;
+mapStatusBallooned(41:160, 40:310) = 1;
+mapStatusBallooned(441:560, 40:310) = 1;
+mapStatusBallooned(141:460, 190:310) = 1;
+mapStatusBallooned(141:260, 40:160) = 1;
+mapStatusBallooned(341:460, 40:160) = 1;
+mapStatusBallooned(141:260, 340:560) = 1;
+mapStatusBallooned(241:360, 440:560) = 1;
+mapStatusBallooned(341:460, 340:560) = 1;
+mapStatusBallooned(541:600, 190:310) = 1;
+mapStatusBallooned(1:160, 441:560) = 1;
 mapBallooned = map2d(sizeRow,sizeCol);
 mapBallooned.cellStatus = mapStatusBallooned;
 figure;
@@ -42,10 +50,10 @@ img = mapBallooned.showMapMatrixImg();
 imshow(img);
 %% generate astar on origin map
 % build path
-% startPoint = [25,25];
-% endPoint = [575,575];
+% startPoint = [250,25];
+% endPoint = [350,575];
 % scoreFlag = 'diagonal';%'manhattan';
-% logFileName = 'realexpMap3-astar.csv';
+% logFileName = 'realexpMap4-astar.csv';
 % gridSize = 1;
 % figure;
 % [path_mat, imgResult] = astar(map,startPoint, endPoint, scoreFlag, logFileName, gridSize);
@@ -54,10 +62,10 @@ imshow(img);
 % hold on;
 % plot(y, x);
 %% generate astar ballooned map:
-% startPoint = [25,25];
-% endPoint = [575,575];
+% startPoint = [250,25];
+% endPoint = [350,575];
 % scoreFlag = 'diagonal';
-% logFileName = 'realexpMap3Ballooned-astar.csv';
+% logFileName = 'realexpMap4Ballooned-astar.csv';
 % gridSize = 1;
 % figure;
 % [path_mat, imgResult] = astar(mapBallooned,startPoint, endPoint, scoreFlag, logFileName, gridSize);
@@ -66,20 +74,9 @@ imshow(img);
 % hold on;
 % plot(y, x);
 %% find selected path for path smooth
-logFileName = 'realexpMap3Ballooned-astar.csv';
+logFileName = 'realexpMap4Ballooned-astar.csv';
 path = csvPathSelect(logFileName);
-% path{15} = [461, 461];
-% path(14) = [];
-% path(13) = [];
-% path{12} = [240, 461];
-% path(11) = [];
-% path{9} = [280, 300];
-% path{8} = [321, 300];
-% path(7) = [];
-% path(6) = [];
-% path{5} = [361, 260];
-% path(4) = [];
-% path{3} = [361, 139];
+path(7) = [];
 x = [];
 y = [];
 for i = 1 : length(path)
@@ -91,7 +88,7 @@ hold on;
 plot(y, x);
 
 % set radius
-radius = 30;
+radius = 40;
 
 % set output picture size
 picSize = 800;
@@ -117,17 +114,17 @@ newPath = path;
 disp(newPath);
 newPath = transCorList(newPath,map);
 
-vmax = 300;
-amax = 100;
+vmax = 100;
+amax = 40;
 maxIter = 10000;
-[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 5, false, 2, maxIter);
-disp(r);
-dt = 0.03;
+[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 10, true, 5, maxIter);
+% disp(r);
+dt = 0.1;
 mat = plotSmoothPath(time, r, dt, false);
-disp(mat);
+% disp(mat);
  
 % format long g; % no scientific notation
-fid = fopen('realExpriment3-smooth.csv', 'w');
+fid = fopen('realExpriment4-smooth.csv', 'w');
 legend = {'time', 'x', 'y' ,'vx', 'vy'};
 fprintf(fid, '%s,%s,%s,%s,%s\n', legend{:});
 for i = 1: length(mat)
