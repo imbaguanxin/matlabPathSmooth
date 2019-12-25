@@ -108,6 +108,72 @@ amax = 100;
 maxIter = 10000;
 [r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 20, true, 2, maxIter);
 disp(r);
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ??????
+
+% ?????(??????csv)
+csvIn = csvread("exp1-smooth.csv");
+timeList = csvIn(:,1);
+currentSeg = 1;
+timeInterval = 0;
+afterPub = false;
+% ?????0????0??
+timeList = timeList - timeList(1);
+% ?????????????????????????????vx?vy??0?
+result = zeros(length(timeList), 5);
+result(:,1) = timeList;
+for i = 1:length(timeList)
+    if (~afterPub)
+        % ????????????????
+        shiftedTime = timeList(i) - timeInterval;
+        % ?????????????????
+        if (shiftedTime > time{currentSeg})
+            % time ???mainConstraint?????????
+            timeInterval = timeInterval + time{currentSeg};
+            shiftedTime = shiftedTime - time{currentSeg};
+            currentSeg = currentSeg + 1;
+        end
+        % ????x, y, vx, vy
+        % start????????????
+        start = (i - 1) * 10;
+        % r ???????????mainConstraint?????????
+        x = r(start + 1) * shiftedTime.^4 + r(start + 2) * shiftedTime.^3 ...
+            + r(start + 3) * shiftedTime.^2 + r(start + 4) * shiftedTime.^1 ...
+            + r(start + 5);
+        y = r(start + 6) * shiftedTime.^4 + r(start + 7) * shiftedTime.^3 ...
+            + r(start + 8) * shiftedTime.^2 + r(start + 9) * shiftedTime.^1 ...
+            + r(start + 10);
+        vx = 4 * r(start + 1) * shiftedTime.^3 + 3 * r(start + 2) * shiftedTime.^2 ...
+            + 2 * r(start + 3) * shiftedTime + r(start + 4);
+        vy = 4 * r(start + 6) * shiftedTime.^3 + 3 * r(start + 7) * shiftedTime.^2 ...
+            + 2 * r(start + 8) * shiftedTime + r(start + 9);
+        result(i,2:5) = [x, y, vx, vy];
+    else
+        % ?????????????????????????????vx?vy??0?
+        result(i,2:3) = result(i-1,2:3);
+        % ????????????????????????????
+%         lastPoint = newPath{length(newPath)};
+%         result(i,2:3) = [lastPoint(1), lastPoint(2)];
+    end
+end
+% result???????????????
+% fid = fopen('shiftedResult.csv', 'w');
+% legend = {'time', 'x', 'y' ,'vx', 'vy'};
+% fprintf(fid, '%s,%s,%s,%s,%s\n', legend{:});
+% [row, ~] = size(result);
+% for i = 1: row
+%     fprintf(fid, '%3.3f,%3.3f,%3.3f,%3.3f,%3.3f\n', result(i,:));
+% end
+% fclose(fid);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 dt = 0.01;
 mat = plotSmoothPath(time, r, dt, false);
 disp(mat);
