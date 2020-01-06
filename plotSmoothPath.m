@@ -5,13 +5,11 @@ if (whetherNewFig)
     figure;
 end
 result = cell(1,length(timeList));
+tadder = 0;
+smallTime = 0;
 for i = 1 : length(timeList)
     start = (i-1) * 10;
-    t = 0:dt:timeList(i);
-    tadder = 0;
-    for j = 1:i-1
-        tadder = tadder + timeList(i);
-    end
+    t = smallTime:dt:timeList(i);
     rt = t + tadder;
     x = vector(start + 1) * t.^4 + vector(start + 2) * t.^3 ...
         + vector(start + 3) * t.^2 + vector(start + 4) * t.^1 ...
@@ -27,6 +25,8 @@ for i = 1 : length(timeList)
     result{i} = group;
     plot(x,y);
     hold on;
+    tadder = tadder + timeList(i);
+    smallTime = dt - tadder + rt(length(rt)); 
 end
 end
 

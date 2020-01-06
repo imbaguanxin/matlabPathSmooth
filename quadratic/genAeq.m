@@ -4,10 +4,14 @@ function result = genAeq(inputT)
 lastT = inputT(length(inputT));
 len = length(inputT);
 % hard code the start point and end point constraints
-hardCodeConstraints = zeros(4,10*len);
+hardCodeConstraints = zeros(4 + 4,10*len);
 % start point constraints
+% start position
 hardCodeConstraints(1,5) = 1;
 hardCodeConstraints(2,10) = 1;
+% start velocity
+hardCodeConstraints(5,4) = 1;
+hardCodeConstraints(6,9) = 1;
 % end point constraints
 hardCodeConstraints(3, 5 * 2 * (len - 1) + 1) = lastT(1)^4;
 hardCodeConstraints(3, 5 * 2 * (len - 1) + 2) = lastT(1)^3;
@@ -19,6 +23,15 @@ hardCodeConstraints(4, 5 * 2 * (len - 1) + 7) = lastT(1)^3;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 8) = lastT(1)^2;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 9) = lastT(1)^1;
 hardCodeConstraints(4, 5 * 2 * (len - 1) + 10) = 1;
+% end velocity
+hardCodeConstraints(7, 5 * 2 * (len - 1) + 1) = 4 * lastT(1)^3;
+hardCodeConstraints(7, 5 * 2 * (len - 1) + 2) = 3 * lastT(1)^2;
+hardCodeConstraints(7, 5 * 2 * (len - 1) + 3) = 2 * lastT(1)^1;
+hardCodeConstraints(7, 5 * 2 * (len - 1) + 4) = 1;
+hardCodeConstraints(8, 5 * 2 * (len - 1) + 6) = 4 * lastT(1)^3;
+hardCodeConstraints(8, 5 * 2 * (len - 1) + 7) = 3 * lastT(1)^2;
+hardCodeConstraints(8, 5 * 2 * (len - 1) + 8) = 2 * lastT(1)^1;
+hardCodeConstraints(8, 5 * 2 * (len - 1) + 9) = 1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % hardCodeConstraints = zeros(4*length(inputT),10*len);
 % for i = 1 : length(inputT)
