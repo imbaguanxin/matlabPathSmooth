@@ -114,15 +114,16 @@ newPath = path;
 disp(newPath);
 newPath = transCorList(newPath,map);
 
-vmax = 300;
-amax = 5;
+vmax = 100;
+amax = 50;
 maxIter = 10000;
-timeInterval = zeros(1,length(newCons));
-for i = 1 : length(timeInterval)
-    timeInterval(i) = 3;
-end
+% timeInterval = zeros(1,length(newCons));
+% for i = 1 : length(timeInterval)
+%     timeInterval(i) = 3;
+% end
 % manually adjust time of each segment.
-[r,A,B,time,initState] = mainConstraintTime(newCons, newPath, amax, vmax, 20, timeInterval, maxIter);
+% [r,A,B,time,initState] = mainConstraintTime(newCons, newPath, amax, vmax, 20, timeInterval, maxIter);
+[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 2, true, 2, maxIter);
 % disp(r);
 dt = 0.1;
 mat = plotSmoothPath(time, r, dt, false);

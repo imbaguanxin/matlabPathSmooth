@@ -77,7 +77,7 @@ hold on;
 plot(y, x);
 
 % set radius
-radius = 40;
+radius = 100;
 
 % set output picture size
 picSize = 800;
@@ -103,8 +103,8 @@ newPath = path;
 disp(newPath);
 newPath = transCorList(newPath,map);
 
-vmax = 50;
-amax = 25;
+vmax = 100;
+amax = 20;
 maxIter = 10000;
 [r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 20, true, 2, maxIter);
 disp(r);

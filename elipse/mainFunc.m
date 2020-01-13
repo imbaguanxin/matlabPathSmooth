@@ -39,8 +39,8 @@ for i = xl : xh
 end
 
 % draw the ellipse center and collision point
-mapXY.cellStatus(minx,miny) = 3;
-mapXY.cellStatus(ceil(cx),ceil(cy)) = 3;
+mapXY.colorStatus(minx,miny) = 3;
+mapXY.colorStatus(ceil(cx),ceil(cy)) = 3;
 
 ellipse{length(ellipse) + 1} = [a, sqrt(minbsquare), cos, sin, cx, cy];
 
@@ -57,9 +57,8 @@ barriers = {} ;
 for i = sxl : sxh
     for j = syl : syh
         if (mapXY.cellStatus(i,j) == 1 && ~mapXY.isInsideBlock(i,j) && isSameSide(constrain, [i,j], [cx,cy]))
-            %             mapXY.cellStatus(i,j) = 3;
             barriers{length(barriers) + 1} = [i,j];
-            mapXY.cellStatus(i,j) = 3;
+            mapXY.colorStatus(i,j) = 3;
         end
     end
 end
@@ -82,7 +81,7 @@ while(~isempty(barriers))
             minPlace = i;
         end
     end
-    mapXY.cellStatus(minx,miny) = 4;
+    mapXY.colorStatus(minx,miny) = 4;
     barriers(minPlace) = [];
     ellipse{length(ellipse) + 1} = [sqrt(abratio^2 * bsquare), sqrt(bsquare), cos,sin,cx,cy];
     [tla, tlb, tlc] = tangentLine(abratio^2 * bsquare,bsquare,cos,sin,[minx,miny],[cx,cy]);
@@ -125,11 +124,11 @@ end
 % color the safe area
 for i = sxl : sxh
     for j = syl : syh
-        if ((mapXY.cellStatus(i,j) == 0 || mapXY.cellStatus(i,j) == 13) && isSameSide(constrain, [i,j], [cx,cy]))
-            if (mapXY.cellStatus(i,j) == 0)
-                mapXY.cellStatus(i,j) = 13;
+        if (isSameSide(constrain, [i,j], [cx,cy]))
+            if (mapXY.colorStatus(i,j) == 0)
+                mapXY.colorStatus(i,j) = 13;
             else
-                mapXY.cellStatus(i,j) = 14;
+                mapXY.colorStatus(i,j) = 14;
             end
         end
     end

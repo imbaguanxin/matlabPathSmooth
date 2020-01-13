@@ -20,7 +20,7 @@ if (length(constraints) == length(changedPath) - 1)
             [m,b] = splitConstrain(cons,center);
             Atemp = [];
             Btemp = [];
-            for j = 0 : time(i)/consNum : floor(time(i))
+            for j = 0 : time(i)/consNum : time(i)
                 Atemp = [Atemp; constrain2A(m,numOfOrder,j,i,numOfTotalSeg)];
                 Btemp = [Btemp; b];
             end

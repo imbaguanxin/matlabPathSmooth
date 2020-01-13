@@ -1,9 +1,10 @@
 classdef mapXYcor
-    %MAPXYCOR 此处显示有关此类的摘�?
-    %   一个以正常XY�??标系的地图
+    %MAPXYCOR map in normal XY corrdinate
+    %   cellStatus: 0 - empty, 1 - blocked
     
     properties
         cellStatus
+        colorStatus
         xLength
         yLength
     end
@@ -13,6 +14,7 @@ classdef mapXYcor
             %MAPXYCOR creates a empty x-y corrdinate map
             if (maxX > 0 && maxY > 0)
                 obj.cellStatus = zeros(maxX, maxY);
+                obj.colorStatus = zeros(maxX, maxY);
                 obj.xLength = maxX;
                 obj.yLength = maxY;
             else
@@ -49,7 +51,7 @@ classdef mapXYcor
             result = zeros(self.yLength, self.xLength, 3);
             for i = 1 : self.xLength
                 for j = 1 : self.yLength
-                    temp = self.cellStatus(i,j);
+                    temp = self.colorStatus(i,j);
                     color = [.5,.5,.5];
                     if (temp == 0)
                         % #FFFFFF white
