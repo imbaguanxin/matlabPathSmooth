@@ -119,8 +119,8 @@ newPath = transCorList(newPath,map);
 
 vmax = 100;
 amax = 20;
-maxIter = 10000;
-[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 10, true, 2, maxIter);
+maxIter = 1000;
+[r,A,B,time,initState] = mainConstraint(newCons, newPath, amax, vmax, 2, true, 2, maxIter);
 disp(r);
 dt = 0.03;
 mat = plotSmoothPath(time, r, dt, false);
